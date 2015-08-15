@@ -1,0 +1,143 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Self Chat</title>
+	{% load staticfiles %}
+	<script src="{% static 'polls/angular.js' %}"></script>
+	<script src="{% static 'polls/moment.js' %}"></script>
+    
+    <style>
+        .ind_message {
+            max-width: 100%;
+            border-width:1px;
+            border-style:solid;
+            border-color:aliceblue;
+            padding: 5px 5px 5px 5px; 
+            margin: 5px auto 5px auto; 
+            border-radius: 5px 5px 5px 5px;
+            display:block;            
+            background-color: #F2EEB3;
+			overflow: hidden;
+            font-family: "Comic Sans MS", cursive, sans-serif;
+        }
+        .message_container {
+            max-width: 100%;
+            border-width:1px;
+            border-style:solid;
+            border-color:aliceblue;
+            padding: 5px 5px 5px 5px; 
+            margin: 5px auto 5px auto; 
+            border-radius: 5px 5px 5px 5px;
+            display:block;            
+            background-color: #F2EEB3;
+			overflow: hidden;
+            font-family: "Comic Sans MS", cursive, sans-serif;
+        }        
+        .input_text{
+            width: 80%;
+            border-width:1px;
+            border-style:inset;
+            border-color:aliceblue;
+            padding: 5px 5px 5px 5px; 
+            margin: 5px 2px 5px 2px; 
+            display:inline;
+            background-color:beige;
+            border-radius: 5px 5px 5px 5px;
+        } 
+        .text_background {
+            max-width: 100%;            
+            padding: 5px 5px 5px 5px; 
+            margin: 5px auto 5px auto; 
+            display:block;
+        } 
+        .button_submit{
+            display:inline;
+            width: 18%;
+            border-width:1px;
+            border-style:outset;
+            border-color:aliceblue;
+            background-color:aliceblue;
+            padding: 5px 5px 5px 5px; 
+            margin: 5px auto 5px auto;   
+            border-radius: 10px 10px 10px 10px;
+            overflow: hidden
+        }  
+        .button_submit:hover{
+            background-color:cornflowerblue;            
+        }
+        .top_border{
+            display: block;
+            border-width:10px;
+            border-style:groove;
+            width:50%;
+            margin: 5px auto 5px auto; 
+            padding: 5px 5px 5px 5px; 
+            box-shadow: 0 0 10px #777777;
+            background-color:cadetblue
+        }
+        .message_time{
+            font-family: "Courier New", Courier, monospace;
+            font-size: 11;
+            text-align:right;
+            color: darkslategray
+        }
+        
+    </style>
+<script>
+var selfChat = angular.module("selfChat", []).config(function($interpolateProvider){
+			$interpolateProvider.startSymbol('{$');
+			$interpolateProvider.endSymbol('$}');
+			});
+selfChat.controller("chatController",function($scope,Message){
+    $scope.allMessages = [];
+    $scope.addChatMessage = function(){
+                if($scope.messageContent){
+			var newMessage = new Message();
+                	newMessage.message = $scope.messageContent;
+                	newMessage.createdAt = moment().format('dddd, Do MMM YYYY HH:m:s');
+                	$scope.allMessages.push(newMessage);    
+                	$scope.messageContent = '';
+		}
+            };
+    
+    $scope.onKeyEnter = function(keyEvent) {
+        if (keyEvent.which == 13)
+            $scope.addChatMessage();
+        };
+
+});
+
+selfChat.factory("Message",function getMessageClass(){
+                function Message(){
+                    this.message = '';
+                    this.createdAt = '';                
+                }
+                return Message;    
+});
+
+</script>    
+    
+    
+</head>    
+
+<body ng-app="selfChat">
+<div class="top_border" ng-controller="chatController">
+    <div class="text_background"> 
+        <input type="text" class="input_text" ng-model="messageContent" ng-keypress="onKeyEnter($event)"></input>
+        <input type="button" class="button_submit" value="Submit" ng-click="addChatMessage()"></input>
+    </div>
+    <!-- <div class="ind_message"> Today is a terrific day. Bike tyre punctured. I removed the tyre myself.
+    </div>
+    <div class="ind_message"> Puncture costed me Rs. 50</div>
+    <div class="ind_message"> Thanks to Mritunjay(My Cisco Collegue) for giving me lift till my home in the evening.</div>
+    <div class="ind_message"> Auto from home to office costs Rs.100</div> -->
+    <ol style="list-style-type:none">
+        <li ng-repeat="message in allMessages">
+            <div class="ind_message">{$message.message$}
+            <p class="message_time">{$message.createdAt$}</p>
+            </div>  
+        </li>
+    </ol>
+    
+ </div>       
+</body>
