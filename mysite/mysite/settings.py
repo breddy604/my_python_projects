@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'polls',
+    'social_auth',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -52,6 +53,8 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'mysite.urls'
+
+SESSION_SERIALIZER='django.contrib.sessions.serializers.PickleSerializer'
 
 TEMPLATES = [
     {
@@ -101,3 +104,21 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+AUTHENTICATION_BACKENDS = ( 
+    'social_auth.backends.google.GoogleOAuth2Backend',  # putting this 1st means that most users will auth with their Google identity
+    'django.contrib.auth.backends.ModelBackend',        # ...but this one means we can still have local admin accounts as a fallback
+)
+
+LOGIN_URL          = '/login/google-oauth2/'       
+LOGIN_REDIRECT_URL = '/polls/'
+LOGIN_ERROR_URL    = '/login-error/'
+
+SOCIAL_AUTH_RAISE_EXCEPTIONS = False
+SOCIAL_AUTH_PROCESS_EXCEPTIONS = 'social_auth.utils.log_exceptions_to_messages'  # ...assuming you like the messages framework
+
+ 
+GOOGLE_OAUTH2_CLIENT_ID      = '680236015531-6kljs39cqpcqe03m7832q2t72e2gbnqk.apps.googleusercontent.com'  # this is on the credentials web page from above
+GOOGLE_OAUTH2_CLIENT_SECRET  = 'VSuP_at8NaX3v-2tuXxRPwH2'    # this is also on the credentials web page from above
+ 
+

@@ -14,7 +14,7 @@ class SingleDBConnection(object):
 			
 class DBConnection(SingleDBConnection):
 	def __init__(self):
-		cluster = Cluster()
+		cluster = Cluster(['192.168.137.131'])
 		self.session = cluster.connect('demo')
 	   	self.session.row_factory = dict_factory	
 		self.prep_stmts = {}

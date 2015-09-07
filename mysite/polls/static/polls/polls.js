@@ -1,8 +1,25 @@
 
-var selfChat = angular.module("selfChat", ["ngAnimate"]).config(function($interpolateProvider){
+var selfChat = angular.module("selfChat", ['pikaday','ngRoute']).config(function($interpolateProvider){
                         $interpolateProvider.startSymbol('{$');
                         $interpolateProvider.endSymbol('$}');
                         });
+
+    selfChat.config(function($routeProvider) {
+        $routeProvider
+            .when('/', {
+                templateUrl : '/polls/about/',
+                controller  : 'chatController'
+            })
+            .when('/entry', {
+                templateUrl : '/polls/entry/',
+                controller  : 'chatController'
+            })
+            .when('/list', {
+                templateUrl : '/polls/list/',
+                controller  : 'chatController'
+            });
+    });
+
 selfChat.controller("chatController",function($scope,Message,$http,messageStorage){
     $scope.allMessages = [];
     $scope.addChatMessage = function(){
@@ -15,7 +32,7 @@ selfChat.controller("chatController",function($scope,Message,$http,messageStorag
 		}
             };
    $scope.loadAllMessages = function(){
-                messageStorage.getAllMessages().then(function(result){
+                messageStorage.getAllMessages($scope.for_date).then(function(result){
                         $scope.messages = result;
         });
 	};
@@ -28,8 +45,8 @@ selfChat.controller("chatController",function($scope,Message,$http,messageStorag
 });
 
 selfChat.service("messageStorage",function($http,Message,dateTimeService){
-                this.getAllMessages = function() {
-                        return $http.get('get_messages/').then(
+                this.getAllMessages = function(for_date) {
+                        return $http.get('/polls/list/get_messages/babandi@cisco.com/'+for_date +'/').then(
 
                                 function(response){
                                                         return response.data.map(function(d){
@@ -45,11 +62,15 @@ selfChat.service("messageStorage",function($http,Message,dateTimeService){
     		this.saveMessage = function(message){
                         $http.post('add_message/',message).then(
                                 function(response){
-                                                tmp_messages = response.data.map(function(d){return new Message(angular.fromJson(d));});
+                                                
+						tmp_messages = response.data.map(function(d){return new Message(angular.fromJson(d));});
                                                 message.date_happened = tmp_messages[0].date_happened;
                                                 message.event_time = dateTimeService.toLocalTime(tmp_messages[0].event_time);
                                                 message.sent_status = 'Sent on';
-                                                  }
+                                                  },
+				function(response){
+						window.location.href = '/admin/login/'
+						  }
                                 );
             };
 

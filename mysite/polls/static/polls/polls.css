@@ -39,8 +39,8 @@
             background-color:cornflowerblue;
         }
         .top_border{
-            display: block;
-            border-width:10px;
+            display:block;
+	    border-width:10px;
             border-style:groove;
             width:50%;
             margin: 5px auto 5px auto;
@@ -48,7 +48,7 @@
             box-shadow: 0 0 10px #777777;
             background-color:cadetblue
         }
-        .message_time{
+	.message_time{
             font-family: "Courier New", Courier, monospace;
             font-size: 11;
             text-align:right;
