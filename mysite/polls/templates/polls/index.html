@@ -37,16 +37,21 @@
             <a class="pure-menu-heading" href="#">Talk2You</a>
 
             <ul class="pure-menu-list">
-                <li class="pure-menu-item"><a href="#" class="pure-menu-link">Home</a></li>
+                <li class="pure-menu-item"><a href="#/" class="pure-menu-link">Home</a></li>
                 <li class="pure-menu-item"><a href="#entry" class="pure-menu-link">Entry</a></li>
                 <li class="pure-menu-item"><a href="#list" class="pure-menu-link">View</a></li>
             </ul>
         </div>
     </div>
-
     <div id="main">
+	<div class="header">
+     		<h2>Express Your Life in One Liners</h2>
+		<p class="user">Logged In As : Guest </p>
+	</div>
+
 	<div ng-view></div>
     </div>
+
 </div>
 
 	{% load staticfiles %}

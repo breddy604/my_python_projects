@@ -1,12 +1,20 @@
-<div class="top_border">
-<input pikaday="for_date" /> 
-<input type="button" class="button_submit" value="List All Messages" ng-click="loadAllMessages()"></input>
-    <ol style="list-style-type:none">
-        <li ng-repeat="message in messages">
-            <div class="ind_message">{$ message.content $}
-            <p class="message_time">{$ message.event_time $}</p>
-            </div>  
-        </li>
-    </ol>
-    
+<div class="content">
+	<div class="content">
+	 <form class="pure-form">
+                <fieldset>
+			<input pikaday="for_date" placeholder="Select a Date"/> 
+                        <button type="submit" class="pure-button pure-button-primary" ng-click="loadAllMessages()">List</button>
+                	<p ng-show="selected_date" class="selected_date"> Selected Date: <b>{$ selected_date $} - {$ time_zone $} </b></p>
+		</fieldset>
+         </form>
+	<div ng-show="messages.length != 0" class="content message_border">
+    		<ul class="list_style content">
+        		<li ng-repeat="message in messages">
+            		<div class="message_border"> <span class="ind_message">{$message.content$}</span>
+                	<p class="message_time">At {$message.event_time$}</p>
+            		</div>
+        		</li>
+    		</ul>
+    	</div>
+	</div>
  </div>       
