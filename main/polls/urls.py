@@ -12,7 +12,7 @@ urlpatterns = [
     url(r'^about/$',views.about,name='about'),
     url(r'^entry/$',views.entry,name='entry'),
     url(r'^list/$', views.list, name='list'),
+    url(r'^oops/$', views.oops, name='oops'),
     url(r'^add_message/$', views.add_message, name='add_message'),
-    url(r'^user_info/$', views.get_user_logged_in, name='get_user_logged_in'),
     url(r'^list/get_messages/(.*)/$', views.get_all_messages, name='get_messages'),
 ]

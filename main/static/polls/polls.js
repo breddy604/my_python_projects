@@ -1,3 +1,4 @@
+var ERROR_PAGE_FLAG = "Something went wrong";
 
 var selfChat = angular.module("selfChat", ['pikaday','ngRoute']).config(function($interpolateProvider){
                         $interpolateProvider.startSymbol('{$');
@@ -14,21 +15,19 @@ var selfChat = angular.module("selfChat", ['pikaday','ngRoute']).config(function
                 templateUrl : '/polls/entry/',
                 controller  : 'chatController'
             })
+            .when('/oops', {
+                templateUrl : '/polls/oops/',
+                controller  : 'chatController'
+            })
             .when('/list', {
                 templateUrl : '/polls/list/',
                 controller  : 'chatController'
             });
     });
 
-selfChat.controller("chatController",function($scope,Message,$http,messageStorage,dateTimeService,userService){
+selfChat.controller("chatController",function($scope,Message,$http,messageStorage,dateTimeService){
     $scope.time_zone = dateTimeService.getTimeZone();
     $scope.date_today = dateTimeService.getTodayDate();
-    $scope.init_login_user = function(){
-				userService.getLoggedInUser().then(function(d){
-					$scope.login_user = d;
-				});
-			};
-    $scope.init_login_user();
     $scope.messages = [];
     $scope.addChatMessage = function(){
                 if($scope.messageContent){
@@ -53,24 +52,31 @@ selfChat.controller("chatController",function($scope,Message,$http,messageStorag
 
 });
 
-selfChat.service("messageStorage",function($http,Message,dateTimeService){
+selfChat.service("messageStorage",function($http,Message,dateTimeService,$window){
                 this.getAllMessages = function(for_date) {
                         return $http.get('/polls/list/get_messages/'+for_date +'/').then(
 
                                 function(response){
-                                                        return response.data.map(function(d){
-                                                                var tmp_message =  new Message(angular.fromJson(d));
-								tmp_message.event_time = dateTimeService.toLocalTime(tmp_message.event_time);
-								return tmp_message;
-                                                                });
-                                                  }
+					console.log(response.data);
+	                                        if( response.data.indexOf(ERROR_PAGE_FLAG) != -1){
+							$window.location.href = "/polls/#/oops"
+						} 
+						return response.data.map(function(d){
+        	                                        var tmp_message =  new Message(angular.fromJson(d));
+							tmp_message.event_time = dateTimeService.toLocalTime(tmp_message.event_time);
+							return tmp_message;
+                        	                        });
+                                             }
                                 );
                 };
 
     		this.saveMessage = function(message){
                         $http.post('/polls/add_message/',message).then(
                                 function(response){
-                                                
+                                                if( response.data.indexOf(ERROR_PAGE_FLAG) != -1){
+                                                        $window.location.href = "/polls/#/oops"
+                                                }
+                                           
 						tmp_messages = response.data.map(function(d){return new Message(angular.fromJson(d));});
                                                 message.date_happened = tmp_messages[0].date_happened;
                                                 message.event_time = dateTimeService.toLocalTime(tmp_messages[0].event_time);
@@ -109,6 +115,7 @@ selfChat.value("messageDefaults", {
              content : ''
          });
 
+
 selfChat.factory("Message",function getMessageClass(messageDefaults){
                 function Message(defaults){
                     defaults = defaults || messageDefaults;
@@ -121,16 +128,3 @@ selfChat.factory("Message",function getMessageClass(messageDefaults){
                 return Message;
 });
 
-selfChat.service("userService", function($http){
-        this.getLoggedInUser = function(){
-                return $http.get('/polls/user_info/').then(
-                        function(response){
-                                return response.data;
-                        },
-                        function(response){
-                                return 'ERROR';
-                        }
-                );
-        };
-
-});

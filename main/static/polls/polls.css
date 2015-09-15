@@ -31,4 +31,8 @@
     		border-bottom-style: solid;
     		border-bottom-color: rgb(229, 229, 229);
 	}
+  	.button-logout {
+            background: #DC4E41;
+        }
+
 

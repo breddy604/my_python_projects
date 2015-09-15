@@ -1,8 +1,8 @@
 <div class="content">
 	 <form class="pure-form">
     		<fieldset>
-        		<legend><b>{$ date_today $}::{$ time_zone $}</b> : Key in your feelings,press ENTER</legend>
-			<input type="text" class="pure-input-1" ng-model="messageContent" ng-keypress="onKeyEnter($event)"></input>
+        		<legend style="text-align:center"><b>{$ date_today $}::{$ time_zone $}</b> </legend>
+			<input type="text" class="pure-input-1" ng-model="messageContent" ng-keypress="onKeyEnter($event)" placeholder="Key in your feeling & press ENTER"></input>
         		<button type="submit" class="pure-button pure-button-primary" ng-click="addChatMessage()">Submit</button>
 		</fieldset>
 		</form>		

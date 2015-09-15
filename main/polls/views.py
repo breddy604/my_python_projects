@@ -14,11 +14,29 @@ from google.appengine.ext import ndb
 from google.appengine.api import users
 
 from mysite.utils import MessageEncoder
+from mysite import utils
+
 def index(request):
-    return render(request,'polls/index.html')
+    	print users.CreateLogoutURL(dest_url='/polls/')
+	print users.CreateLoginURL(dest_url='/polls/')
+	return render(request,'polls/index.html',
+		{'login_user' : utils.get_user_logged_in(),
+		 'login_url' : users.CreateLoginURL(dest_url='/polls/'),
+		 'logout_url' : users.CreateLogoutURL(dest_url='/polls/')
+		})
 
 def about(request):
-    return render(request,'polls/about.html')
+    return render(request,'polls/about.html',
+                {
+		 'login_user' : utils.get_user_logged_in(),
+                 'login_url' : users.CreateLoginURL(dest_url='/polls/')
+                })
+
+def oops(request):
+    return render(request,'polls/login.html',
+                {
+                 'login_url' : users.CreateLoginURL(dest_url='/polls/')
+                })
 
 def list(request):
     return render(request,'polls/list.html')
@@ -57,10 +75,3 @@ def get_all_messages(request,g_date):
 	return HttpResponse(json.dumps(messages_json,cls=MessageEncoder))
 
 
-def get_user_logged_in(request):
-	user = users.get_current_user()
-	
-	if user:
-		return HttpResponse(user.nickname())
-	else:
-		return HttpResponse("Guest")

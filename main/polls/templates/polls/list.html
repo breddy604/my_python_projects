@@ -1,9 +1,9 @@
 <div class="content">
 	 <form class="pure-form">
-                <fieldset>
+                <fieldset style="text-align:center">
 			<input pikaday="for_date" placeholder="Select a Date" readonly/> 
                         <button type="submit" class="pure-button pure-button-primary" ng-click="loadAllMessages()">List</button>
-                	<p ng-show="selected_date" class="selected_date"> Selected Date: <b>{$ selected_date $} - {$ time_zone $} </b></p>
+                	<p ng-show="selected_date" class="selected_date"> Diary for : <b>{$ selected_date $} - {$ time_zone $} </b></p>
 		</fieldset>
          </form>
 	<div ng-show="messages.length != 0">

@@ -14,6 +14,7 @@
         <link rel="stylesheet" type="text/css" href="{% static 'polls/polls.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'polls/pikaday.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'polls/pure-min.css' %}">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
         <script src="{% static 'polls/angular.js' %}"></script>
         <script src="{% static 'polls/pikaday.js' %}"></script>
         <script src="{% static 'polls/pikaday-angular.js' %}"></script>
@@ -43,17 +44,24 @@
         </div>
     </div>
     <div id="main">
-	<div class="header" ng-controller="chatController">
-     		<h2>Express Your Life in One Liners</h2>
-		<p class="user">Logged In As : {$ login_user $} </p>
+	<div class="header">
+     		<h2>THE SIMPLE DIARY</h2>
+		<span class="user"> Welcome : {{ login_user }}
+		{% if login_user != 'Guest' %}
+		<a class="pure-button" href="{{logout_url}}">
+			<i class="fa fa-sign-out fa-lg"></i>
+			Logout
+		</a> 
+		{% endif  %}
+		 </span>
 	</div>
 	<div ng-view></div>
     </div>
 
 </div>
 
-	{% load staticfiles %}
         <script src="{% static 'polls/ui.js' %}"></script>
+
 </body>
 </html>
 
