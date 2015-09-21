@@ -38,6 +38,9 @@ def oops(request):
                  'login_url' : users.CreateLoginURL(dest_url='/polls/')
                 })
 
+def error(request):
+    return render(request,'polls/error.html')
+
 def list(request):
     return render(request,'polls/list.html')
 

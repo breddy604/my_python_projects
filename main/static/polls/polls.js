@@ -19,6 +19,10 @@ var selfChat = angular.module("selfChat", ['pikaday','ngRoute']).config(function
                 templateUrl : '/polls/oops/',
                 controller  : 'chatController'
             })
+            .when('/error', {
+                templateUrl : '/polls/error/',
+                controller  : 'chatController'
+            })
             .when('/list', {
                 templateUrl : '/polls/list/',
                 controller  : 'chatController'
@@ -40,9 +44,11 @@ selfChat.controller("chatController",function($scope,Message,$http,messageStorag
             };
    $scope.loadAllMessages = function(){
 		$scope.selected_date = ''+$scope.for_date;
-                messageStorage.getAllMessages($scope.for_date).then(function(result){
+                $scope.load_requested = 'yes' ;
+		messageStorage.getAllMessages($scope.for_date).then(function(result){
                         $scope.messages = result;
-        });
+        }
+	);
 	};
 
     $scope.onKeyEnter = function(keyEvent) {
@@ -66,7 +72,8 @@ selfChat.service("messageStorage",function($http,Message,dateTimeService,$window
 							tmp_message.event_time = dateTimeService.toLocalTime(tmp_message.event_time);
 							return tmp_message;
                         	                        });
-                                             }
+                                             },
+				function(response){}
                                 );
                 };
 
@@ -80,8 +87,10 @@ selfChat.service("messageStorage",function($http,Message,dateTimeService,$window
 						tmp_messages = response.data.map(function(d){return new Message(angular.fromJson(d));});
                                                 message.date_happened = tmp_messages[0].date_happened;
                                                 message.event_time = dateTimeService.toLocalTime(tmp_messages[0].event_time);
-                                                message.sent_status = 'Sent on';
-                                                  }
+                                                  },
+				function(response){
+						message.event_time="Error";
+					}
                                 );
             };
 
@@ -111,7 +120,7 @@ selfChat.service("dateTimeService", function(){
 selfChat.value("messageDefaults", {
              email_id : '',
              date_happened : '',
-             event_time : '',
+             event_time : 'ERROR',
              content : ''
          });
 

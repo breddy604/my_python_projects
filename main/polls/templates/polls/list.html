@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <div class="content">
 	 <form class="pure-form">
                 <fieldset style="text-align:center">
@@ -6,7 +7,7 @@
                 	<p ng-show="selected_date" class="selected_date"> Diary for : <b>{$ selected_date $} - {$ time_zone $} </b></p>
 		</fieldset>
          </form>
-	<div ng-show="messages.length != 0">
+	<div ng-show="messages && messages.length != 0">
     		<table class="pure-table pure-table-bordered" style="width:100%">
         		<thead>
 			<tr>
@@ -20,4 +21,9 @@
             		</tr>
     		</table>
     	</div>
+
+	<div ng-show="!messages" style="text-align:center;color:red">
+		<i class="fa fa-exclamation-triangle fa-6"></i>
+		<p> An Error Has Occurred, Please check your Network Connectivity.</p>
+	</div>
  </div>       
