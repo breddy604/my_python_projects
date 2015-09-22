@@ -1,8 +1,10 @@
 var ERROR_PAGE_FLAG = "Something went wrong";
 
-var selfChat = angular.module("selfChat", ['pikaday','ngRoute']).config(function($interpolateProvider){
+var selfChat = angular.module("selfChat", ['pikaday','ngRoute']).config(function($interpolateProvider,$httpProvider){
                         $interpolateProvider.startSymbol('{$');
                         $interpolateProvider.endSymbol('$}');
+			$httpProvider.defaults.xsrfCookieName = 'csrftoken';
+			$httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
                         });
 
     selfChat.config(function($routeProvider) {

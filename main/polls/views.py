@@ -1,8 +1,8 @@
 
 from django.shortcuts import render
-from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 
+from django.core.context_processors import csrf
 
 from datetime import datetime
 import json
@@ -45,9 +45,8 @@ def list(request):
     return render(request,'polls/list.html')
 
 def entry(request):
-    return render(request,'polls/entry.html')
+    return render(request,'polls/entry.html',{})
 
-@csrf_exempt
 def add_message(request):
         b =  json.loads(request.body)
         raw_date_submit = datetime.utcnow()
