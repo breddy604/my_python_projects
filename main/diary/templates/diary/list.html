@@ -12,12 +12,13 @@
         		<thead>
 			<tr>
             			<th>Message</th>
-            			<th>Time</th>
         		</tr>  
 			</thead>      		
 			<tr ng-repeat="message in messages">
-            			<td style="overflow:hidden">{$message.content$}</td>
-                		<td style="width:8em">{$message.event_time$}</td>
+            			<td> 
+				<span style="float: left; text-align: left">{$message.content$} </span>
+                		<span style="float: right; text-align: right">{$message.event_time$}</span>
+				</td>
             		</tr>
     		</table>
     	</div>
