@@ -24,9 +24,9 @@ class CustomAuthenticationForGAEMiddleWare:
 	def process_view(self,request, view_func, view_args, view_kwargs):
 		 if view_func.__name__ in secure_views:
 			if users.get_current_user() is None:
-				return render(request,'polls/login.html',
+				return render(request,'diary/login.html',
                 			{
-                 			 'login_url' : users.CreateLoginURL(dest_url='/polls/')
+                 			 'login_url' : users.CreateLoginURL(dest_url='/diary/')
                 			})
 
 

@@ -18,5 +18,6 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 
 urlpatterns = [
-	url(r'^polls/', include('polls.urls')),
+	url(r'^diary/', include('diary.urls')),
+	url(r'^$', include('diary.urls')),
 ]
