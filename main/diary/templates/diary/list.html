@@ -9,12 +9,17 @@
          </form>
 	<div ng-show="messages && messages.length != 0">
     		<table class="pure-table pure-table-bordered" style="width:100%">
-        		<thead>
 			<tr>
-            			<th>Message</th>
+            			<td>
+				<span style="float: left; text-align: left">
+					<i class="fa fa-caret-left fa-3 pure-button" ng-show="pagination.offset > 0" ng-click="pagination.prevPage()"> Prev</i> 
+				</span>
+				<span style="float: right; text-align: right">
+					<i class="pure-button fa fa-caret-right fa-3" ng-show="pagination.offset+pagination.pageSize <= messages.length" ng-click="pagination.nextPage()"> Next</i>
+				</span>
+				</td>
         		</tr>  
-			</thead>      		
-			<tr ng-repeat="message in messages">
+			<tr ng-repeat="message in pagination.currentPage">
             			<td> 
 				<span style="float: left; text-align: left">{$message.content$} </span>
                 		<span style="float: right; text-align: right">{$message.event_time$}</span>

@@ -35,11 +35,39 @@ selfChat.controller("chatController",function($scope,Message,$http,messageStorag
     $scope.time_zone = dateTimeService.getTimeZone();
     $scope.date_today = dateTimeService.getTodayDate();
     $scope.messages = [];
+    $scope.pagination = {};
+    var localPagination = $scope.pagination;
+    localPagination.offset = 0;
+    localPagination.pageSize=20;
+    localPagination.showNext=true;
+    localPagination.showPrev=false;
+    localPagination.currentPage = [];
+	
+
+    function pageResult(){
+                localPagination.currentPage = $scope.messages.slice(0+localPagination.offset,localPagination.pageSize+localPagination.offset);
+		if(localPagination.offset + localPagination.pageSize >= $scope.messages.length){
+			localPagination.showNext = false;
+		}
+        }
+
+    $scope.pagination.nextPage = function(){
+			localPagination.showPrev=true;
+                        localPagination.offset += localPagination.pageSize;
+                        pageResult();
+                };
+
+    $scope.pagination.prevPage = function(){
+                        localPagination.offset -= localPagination.pageSize;
+                        pageResult();
+                };
+    
+
     $scope.addChatMessage = function(){
                 if($scope.messageContent){
                         var newMessage = new Message();
                         newMessage.content = $scope.messageContent;
-                        $scope.messages.push(newMessage);
+                        $scope.messages.unshift(newMessage);
                         $scope.messageContent = '';
                 	messageStorage.saveMessage(newMessage);
 		}
@@ -49,7 +77,9 @@ selfChat.controller("chatController",function($scope,Message,$http,messageStorag
                 $scope.load_requested = 'yes' ;
 		messageStorage.getAllMessages($scope.for_date).then(function(result){
                         $scope.messages = result;
+			pageResult();
         }
+
 	);
 	};
 
@@ -65,7 +95,6 @@ selfChat.service("messageStorage",function($http,Message,dateTimeService,$window
                         return $http.get('/diary/list/get_messages/'+for_date +'/').then(
 
                                 function(response){
-					console.log(response.data);
 	                                        if( response.data.indexOf(ERROR_PAGE_FLAG) != -1){
 							$window.location.href = "/diary/#/oops"
 						} 
