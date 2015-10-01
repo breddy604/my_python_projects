@@ -44,6 +44,9 @@ def error(request):
 def list(request):
     return render(request,'diary/list.html')
 
+def credits(request):
+    return render(request,'diary/credits.html')
+
 def entry(request):
     return render(request,'diary/entry.html',{})
 

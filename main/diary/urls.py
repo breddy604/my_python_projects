@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^about/$',views.about,name='about'),
     url(r'^entry/$',views.entry,name='entry'),
     url(r'^list/$', views.list, name='list'),
+    url(r'^credits/$', views.credits, name='credits'),
     url(r'^oops/$', views.oops, name='oops'),
     url(r'^error/$', views.error, name='error'),
     url(r'^add_message/$', views.add_message, name='add_message'),

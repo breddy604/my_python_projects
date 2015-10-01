@@ -21,6 +21,10 @@ var selfChat = angular.module("selfChat", ['pikaday','ngRoute']).config(function
                 templateUrl : '/diary/oops/',
                 controller  : 'chatController'
             })
+            .when('/credits', {
+                templateUrl : '/diary/credits/',
+                controller  : 'chatController'
+            })
             .when('/error', {
                 templateUrl : '/diary/error/',
                 controller  : 'chatController'
