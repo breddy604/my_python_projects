@@ -30,9 +30,18 @@
     		border-bottom-width: 1px;
     		border-bottom-style: solid;
     		border-bottom-color: rgb(229, 229, 229);
+		text-align: center;
 	}
   	.button-logout {
             background: #DC4E41;
         }
-
-
+	.link_credit {
+	    text-decoration: none;
+	    color:black;
+	    text-shadow: 1px 1px #ccc;
+	}
+	
+	.link_credit:hover {
+		text-decoration: underline;
+	}
+	

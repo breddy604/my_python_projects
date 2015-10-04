@@ -1,24 +1,25 @@
 {% load staticfiles %}
 <div class="content">
-	 <form class="pure-form">
-                <fieldset style="text-align:center">
-			<input pikaday="for_date" placeholder="Select a Date" readonly/> 
-                        <button type="submit" class="pure-button pure-button-primary" ng-click="loadAllMessages()">List</button>
-                	<p ng-show="selected_date" class="selected_date"> Diary for : <b>{$ selected_date $} - {$ time_zone $} </b></p>
-		</fieldset>
-         </form>
+		<form class="pure-form" style="text-align:center">	
+			<input pikaday="for_date" style="display:inline" placeholder="Select a Date" readonly size=13/> 
+                        <a class="pure-button" tyle="display:inline" ng-click="loadAllMessages()" ><i class = "fa fa-list fa-2"></i></a>
+        	</form>        	
+	<p ng-show="selected_date" class="selected_date"> Diary for : <b>{$ selected_date $} - {$ time_zone $} </b></p>
 	<div ng-show="messages && messages.length != 0">
     		<table class="pure-table pure-table-bordered" style="width:100%">
+			<thead>
 			<tr>
             			<td>
 				<span style="float: left; text-align: left">
-					<i class="fa fa-caret-left fa-3 pure-button" ng-show="pagination.offset > 0" ng-click="pagination.prevPage()"> Prev</i> 
+					<i class="fa fa-caret-left fa-3 pure-button pure-button-primary" ng-show="pagination.offset > 0" ng-click="pagination.prevPage()"> Prev</i> 
 				</span>
+				<span style="float:center; text-align: center"></span>
 				<span style="float: right; text-align: right">
-					<i class="pure-button fa fa-caret-right fa-3" ng-show="pagination.offset+pagination.pageSize <= messages.length" ng-click="pagination.nextPage()"> Next</i>
+					<i class="pure-button pure-button-primary fa fa-caret-right fa-3" ng-show="pagination.offset+pagination.pageSize < messages.length" ng-click="pagination.nextPage()"> Next</i>
 				</span>
 				</td>
         		</tr>  
+			</thead>
 			<tr ng-repeat="message in pagination.currentPage">
             			<td> 
 				<span style="float: left; text-align: left">{$message.content$} </span>
