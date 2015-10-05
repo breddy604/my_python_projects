@@ -1,8 +1,11 @@
 {% load staticfiles %}
 <div class="content">
-	 <form class="pure-form"> {% csrf_token %}
-			<input type="text" class="pure-input-2-3" style="display:inline" ng-model="messageContent" ng-keypress="onKeyEnter($event)" placeholder="Key in your feeling & press ENTER"></input>
-        		<button type="submit" class="pure-button" style="display:inline" ng-click="addChatMessage()">Submit</button>
+	 
+	<form class="pure-form"> {% csrf_token %}
+			<legend style="text-align:center"><b>Today - </b>{$ date_today $}::{$ time_zone $}</legend>
+			<input type="text" class="pure-input-2-3" style="display:inline" ng-model="messageContent" ng-keypress="onKeyEnter($event)" placeholder="Key in your feeling & press ENTER"></input> 
+        		<a class="pure-button" style="display:inline" ng-click="addChatMessage()">Submit</a>
+			<legend> </legend>
 		</form>		
     
         <div ng-show="messages.length != 0">

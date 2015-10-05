@@ -1,8 +1,9 @@
 {% load staticfiles %}
 <div class="content">
 		<form class="pure-form" style="text-align:center">	
+			<legend style="text-align:center"><b>Today - </b>{$ date_today $}::{$ time_zone $}</legend>
 			<input pikaday="for_date" style="display:inline" placeholder="Select a Date" readonly size=13/> 
-                        <a class="pure-button" tyle="display:inline" ng-click="loadAllMessages()" ><i class = "fa fa-list fa-2"></i></a>
+                        <button class="pure-button" tyle="display:inline" ng-disabled="for_date == ''" ng-click="loadAllMessages()" ><i class = "fa fa-list fa-2"></i></button>
         	</form>        	
 	<p ng-show="selected_date" class="selected_date"> Diary for : <b>{$ selected_date $} - {$ time_zone $} </b></p>
 	<div ng-show="messages && messages.length != 0">
