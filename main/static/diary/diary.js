@@ -35,9 +35,8 @@ var selfChat = angular.module("selfChat", ['pikaday','ngRoute']).config(function
             });
     });
 
-selfChat.controller("chatController",function($scope,Message,$http,messageStorage,dateTimeService){
-    $scope.time_zone = dateTimeService.getTimeZone();
-    $scope.date_today = dateTimeService.getTodayDate();
+selfChat.controller("chatController",function($scope,Message,$http,messageStorage,dateTimeService,$interval){
+    $interval(setTimeInfo,1000);
     $scope.messages = [];
     $scope.pagination = {};
     var localPagination = $scope.pagination;
@@ -47,6 +46,11 @@ selfChat.controller("chatController",function($scope,Message,$http,messageStorag
     localPagination.showPrev=false;
     localPagination.currentPage = [];
 	
+
+    function setTimeInfo(){
+	    	$scope.time_zone = dateTimeService.getTimeZone();
+    		$scope.date_today = dateTimeService.getTodayDate();
+	}
 
     function pageResult(){
                 localPagination.currentPage = $scope.messages.slice(0+localPagination.offset,localPagination.pageSize+localPagination.offset);
@@ -145,7 +149,7 @@ selfChat.service("dateTimeService", function(){
 		return m_arr[1];
 	};
 	this.getTodayDate = function(){
-		return moment().format('ddd MMM DD YYYY');	
+		return moment().format('ddd MMM DD YYYY HH:mm:ss');	
 	};
 
 
