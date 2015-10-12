@@ -6,7 +6,7 @@
                         <button class="pure-button" tyle="display:inline" ng-disabled="for_date == ''" ng-click="loadAllMessages()" ><i class = "fa fa-list fa-2"></i></button>
         	</form>        	
 	<p ng-show="selected_date" class="selected_date"> Diary for : <b>{$ selected_date $} - {$ time_zone $} </b></p>
-	<div ng-show="messages && messages.length != 0">
+	<div ng-show="!loading && messages && messages.length != 0">
     		<table class="pure-table pure-table-bordered" style="width:100%">
 			<thead>
 			<tr>
@@ -30,8 +30,17 @@
     		</table>
     	</div>
 
-	<div ng-show="!messages" style="text-align:center;color:red">
-		<i class="fa fa-exclamation-triangle fa-6"></i>
+        <div ng-show="loading">
+        	<p style="text-align:center" ><i class="fa fa-cog fa-spin fa-2x"></i> </p>
+	</div>
+
+	<div ng-show="selected_date && !loading && messages && messages.length == 0">
+		<p style="text-align:center" ><i class="fa fa-info-circle fa-2x"></i>
+		 No activities recorded</p>
+	</div>
+
+	<div ng-show="!messages && !loading" style="text-align:center;color:red">
+		<i class="fa fa-exclamation-triangle fa-2x"></i>
 		<p> An Error Has Occurred, Please check your Network Connectivity.</p>
 	</div>
  </div>       

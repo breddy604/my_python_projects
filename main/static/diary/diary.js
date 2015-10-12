@@ -81,13 +81,17 @@ selfChat.controller("chatController",function($scope,Message,$http,messageStorag
 		}
             };
    $scope.loadAllMessages = function(){
+		$scope.loading = true;
 		$scope.selected_date = ''+$scope.for_date;
-                $scope.load_requested = 'yes' ;
 		messageStorage.getAllMessages($scope.for_date).then(function(result){
-                        $scope.messages = result;
+			$scope.loading = false;
+			$scope.messages = result;
 			pageResult();
-        }
-
+        },
+		function(result){
+			$scope.messages = null;
+			$scope.loading = false;
+	}
 	);
 	};
 
@@ -111,11 +115,8 @@ selfChat.service("messageStorage",function($http,Message,dateTimeService,$window
 							tmp_message.event_time = dateTimeService.toLocalTime(tmp_message.event_time);
 							return tmp_message;
                         	                        });
-                                             },
-				function(response){}
-                                );
-                };
-
+                                             });
+		};
     		this.saveMessage = function(message){
                         $http.post('/diary/add_message/',message).then(
                                 function(response){

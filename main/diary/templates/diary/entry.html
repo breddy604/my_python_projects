@@ -21,7 +21,7 @@
                         <tr ng-repeat="message in messages">
                                 <td>
 				<span style="float: left; text-align: left"> {$message.content$} </span> 
-				<span style="float: right; text-align: right" ng-show="!message.event_time"><img src="{% static 'diary/progress.gif' %}" /></span>
+				<span style="float: right; text-align: right" ng-show="!message.event_time"><i class="fa fa-cog fa-spin"></i></span>
 				<span style="float: right; text-align: right" ng-show="message.event_time && message.event_time != 'Error'"><i class="fa fa-check fa-2" style="color:green"></i>{$message.event_time$}</span>
 				<span style="float: right; text-align: right" ng-show="message.event_time && message.event_time == 'Error'"><i class="fa fa-times fa-3" style="color:red"></i> {$message.event_time$}</span>
                         	</td>
