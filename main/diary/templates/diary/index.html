@@ -62,12 +62,12 @@
 			<i class="fa fa-user"></i>
 			{% if login_user != 'Guest' %}
 			{{ login_user }}
-			<a class="pure-button" href="{{logout_url}}" title="Logout">
+			<a class="pure-button" href="#sure" title="Logout">
 			<i class="fa fa-sign-out"></i>
 			</a> 
 			{% else %}
 			Guest	
-			<a class="pure-button" href="{{login_url}}" title="Sign-In with Google">
+			<a class="pure-button" href="#login" title="Sign-In">
 			<i class="fa fa-sign-in"></i>
 			</a>
 			{% endif %}

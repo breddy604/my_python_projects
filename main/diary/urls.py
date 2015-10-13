@@ -14,7 +14,9 @@ urlpatterns = [
     url(r'^list/$', views.list, name='list'),
     url(r'^credits/$', views.credits, name='credits'),
     url(r'^oops/$', views.oops, name='oops'),
+    url(r'^login/$', views.login, name='login'),
     url(r'^error/$', views.error, name='error'),
+    url(r'^sure/$', views.sure, name='sure'),
     url(r'^add_message/$', views.add_message, name='add_message'),
     url(r'^list/get_messages/(.*)/$', views.get_all_messages, name='get_messages'),
 ]

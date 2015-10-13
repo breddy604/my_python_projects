@@ -1,7 +1,5 @@
 {% load staticfiles %}
 <div class="content">
-	<p>
-		Oops! Something went wrong. Your session is not valid, Please login to continue ...	
-	</p>
-	<a href="{{login_url}}"><img src="{% static 'diary/g_button.png' %}" > </a>
+	<h2 class="content-subhead">Sign-In . . .</h2>
+	<a href="{{login_url}}"><img src="{% static 'diary/g_button.png' %}" title="Sign-In with Google"> </a>
 </div>

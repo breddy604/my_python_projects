@@ -21,25 +21,32 @@ def index(request):
 	print users.CreateLoginURL(dest_url='/diary/')
 	return render(request,'diary/index.html',
 		{'login_user' : utils.get_user_logged_in(),
-		 'login_url' : users.CreateLoginURL(dest_url='/diary/'),
-		 'logout_url' : users.CreateLogoutURL(dest_url='/diary/')
 		})
 
 def about(request):
-    return render(request,'diary/about.html',
-                {
-		 'login_user' : utils.get_user_logged_in(),
-                 'login_url' : users.CreateLoginURL(dest_url='/diary/')
-                })
+    return render(request,'diary/about.html')
 
 def oops(request):
-    return render(request,'diary/login.html',
+    return render(request,'diary/oops.html',
                 {
                  'login_url' : users.CreateLoginURL(dest_url='/diary/')
                 })
 
 def error(request):
     return render(request,'diary/error.html')
+
+def sure(request):
+        return render(request,'diary/sure.html',
+                { 
+		'logout_url' : users.CreateLogoutURL(dest_url='/diary/'),
+                })
+
+
+def login(request):
+        return render(request,'diary/login.html',
+                { 
+                'login_url' : users.CreateLoginURL(dest_url='/diary/'),
+                })
 
 def list(request):
     return render(request,'diary/list.html')
