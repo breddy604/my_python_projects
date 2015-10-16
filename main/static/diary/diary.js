@@ -1,20 +1,20 @@
 var ERROR_PAGE_FLAG = "Something went wrong";
 
-var selfChat = angular.module("selfChat", ['pikaday','ngRoute']).config(function($interpolateProvider,$httpProvider){
+var diary = angular.module("diary", ['pikaday','ngRoute']).config(function($interpolateProvider,$httpProvider){
                         $interpolateProvider.startSymbol('{$');
                         $interpolateProvider.endSymbol('$}');
 			$httpProvider.defaults.xsrfCookieName = 'csrftoken';
 			$httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
                         });
 
-    selfChat.config(function($routeProvider) {
+    diary.config(function($routeProvider) {
         $routeProvider
             .when('/', {
                 templateUrl : '/diary/about/',
             })
             .when('/entry', {
                 templateUrl : '/diary/entry/',
-                controller  : 'chatController'
+                controller  : 'entryController'
             })
             .when('/oops', {
                 templateUrl : '/diary/oops/',
@@ -33,11 +33,37 @@ var selfChat = angular.module("selfChat", ['pikaday','ngRoute']).config(function
             })
             .when('/list', {
                 templateUrl : '/diary/list/',
-                controller  : 'chatController'
+                controller  : 'viewController'
             });
     });
 
-selfChat.controller("chatController",function($scope,Message,$http,messageStorage,dateTimeService,$interval){
+diary.controller("entryController",function($scope,Message,$http,messageStorage,dateTimeService,$interval){
+    $interval(setTimeInfo,1000);
+    $scope.messages = [];
+    
+    function setTimeInfo(){
+            $scope.time_zone = dateTimeService.getTimeZone();
+            $scope.date_today = dateTimeService.getTodayDate();
+    }
+
+    $scope.addChatMessage = function(){
+                if($scope.messageContent){
+                        var newMessage = new Message();
+                        newMessage.content = $scope.messageContent;
+                        $scope.messages.unshift(newMessage);
+                        $scope.messageContent = '';
+                    messageStorage.saveMessage(newMessage);
+        }
+            };
+
+    $scope.onKeyEnter = function(keyEvent) {
+        if (keyEvent.which == 13)
+            $scope.addChatMessage();
+        };
+
+});
+
+diary.controller("viewController",function($scope,Message,$http,messageStorage,dateTimeService,$interval){
     $interval(setTimeInfo,1000);
     $scope.messages = [];
     $scope.pagination = {};
@@ -73,15 +99,6 @@ selfChat.controller("chatController",function($scope,Message,$http,messageStorag
                 };
     
 
-    $scope.addChatMessage = function(){
-                if($scope.messageContent){
-                        var newMessage = new Message();
-                        newMessage.content = $scope.messageContent;
-                        $scope.messages.unshift(newMessage);
-                        $scope.messageContent = '';
-                	messageStorage.saveMessage(newMessage);
-		}
-            };
    $scope.loadAllMessages = function(){
 		$scope.loading = true;
 		$scope.selected_date = ''+$scope.for_date;
@@ -96,15 +113,9 @@ selfChat.controller("chatController",function($scope,Message,$http,messageStorag
 	}
 	);
 	};
-
-    $scope.onKeyEnter = function(keyEvent) {
-        if (keyEvent.which == 13)
-            $scope.addChatMessage();
-        };
-
 });
 
-selfChat.service("messageStorage",function($http,Message,dateTimeService,$window){
+diary.service("messageStorage",function($http,Message,dateTimeService,$window){
                 this.getAllMessages = function(for_date) {
                         return $http.get('/diary/list/get_messages/'+for_date +'/').then(
 
@@ -139,7 +150,7 @@ selfChat.service("messageStorage",function($http,Message,dateTimeService,$window
 
 });
 
-selfChat.service("dateTimeService", function(){
+diary.service("dateTimeService", function(){
 
 	this.toLocalTime = function(event_time){
 		var time_utc = moment.utc(event_time, 'YYYY-MM-DD HH:mm:ss.SSSSSS');
@@ -159,7 +170,7 @@ selfChat.service("dateTimeService", function(){
 });
 
 
-selfChat.value("messageDefaults", {
+diary.value("messageDefaults", {
              email_id : '',
              date_happened : '',
              event_time : 'ERROR',
@@ -167,7 +178,7 @@ selfChat.value("messageDefaults", {
          });
 
 
-selfChat.factory("Message",function getMessageClass(messageDefaults){
+diary.factory("Message",function getMessageClass(messageDefaults){
                 function Message(defaults){
                     defaults = defaults || messageDefaults;
                     this.email_id = defaults.email_id;
