@@ -26,6 +26,9 @@ def index(request):
 def about(request):
     return render(request,'diary/about.html')
 
+def feedback(request):
+    return render(request,'diary/feedback.html')
+
 def oops(request):
     return render(request,'diary/oops.html',
                 {

@@ -31,6 +31,9 @@ var diary = angular.module("diary", ['pikaday','ngRoute']).config(function($inte
             .when('/sure', {
                 templateUrl : '/diary/sure/',
             })
+            .when('/feedback', {
+                templateUrl : '/diary/feedback/',
+            })            
             .when('/list', {
                 templateUrl : '/diary/list/',
                 controller  : 'viewController'

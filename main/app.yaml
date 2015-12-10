@@ -8,6 +8,7 @@ handlers:
   static_dir: static
 - url: /.*
   script: mysite.wsgi.application
+  secure: always
 
 libraries:
 - name: django
