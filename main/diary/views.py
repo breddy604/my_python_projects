@@ -9,12 +9,16 @@ import json
 
 from models import DayAndUser
 from models import Message
+from models import UserFeedback
 
 from google.appengine.ext import ndb
 from google.appengine.api import users
 
 from mysite.utils import MessageEncoder
 from mysite import utils
+
+from google.appengine.api import mail
+
 
 def index(request):
     	print users.CreateLogoutURL(dest_url='/diary/')
@@ -25,6 +29,9 @@ def index(request):
 
 def about(request):
     return render(request,'diary/about.html')
+
+def edit(request):
+    return render(request,'diary/editMessage.html')
 
 def feedback(request):
     return render(request,'diary/feedback.html')
@@ -54,8 +61,8 @@ def login(request):
 def list(request):
     return render(request,'diary/list.html')
 
-def credits(request):
-    return render(request,'diary/credits.html')
+#def credits(request):
+#    return render(request,'diary/credits.html')
 
 def entry(request):
     return render(request,'diary/entry.html',{})
@@ -77,6 +84,13 @@ def add_message(request):
 	me.put()	
 
         return HttpResponse(json.dumps([{'email_id' : c_user , 'date_happened' : str(date_submit) , 'time' : str(raw_date_submit) , 'content' : b['content']}]))
+
+
+def submit_feedback(request):
+    fdback = UserFeedback(user=users.get_current_user().email(), feedback=request.body, time_submitted=datetime.utcnow())
+    fdback.put()
+    
+    return HttpResponse("Success");
 
 
 def get_all_messages(request,g_date):

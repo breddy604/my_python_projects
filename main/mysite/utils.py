@@ -9,7 +9,8 @@ from django.http import HttpResponseRedirect
 secure_views = ['list',
 		'entry',
 		'add_message',
-		'get_all_messages'
+		'get_all_messages',
+        'feedback'
 		]
 
 class MessageEncoder(JSONEncoder):

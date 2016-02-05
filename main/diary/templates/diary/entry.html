@@ -1,5 +1,5 @@
 {% load staticfiles %}
-<div class="content">
+<div class="content" style="position:relative;z-index=10">
     <form class="pure-form"> {% csrf_token %}
         <legend ng-show="!date_today" style="text-align:center">
             <i class="fa fa-cog fa-spin fa-1x"></i>
@@ -10,12 +10,13 @@
         </legend>
         <div class="pure-g" style="text-align:center;vertical-align:middle">
             <div class="pure-u-22-24">
-                <input type="text" class="pure-input-1" style="display:inline" ng-model="messageContent" ng-keypress="onKeyEnter($event)" placeholder="Key in your feeling & press ENTER">
-                </input>
+                <textarea class="pure-input-1" style="display:inline" ng-model="messageContent" ng-keypress="onKeyEnter($event)" placeholder="Key in your feeling & press ENTER" id="inputContent">
+                </textarea>
             </div>
             <div class="pure-u-2-24">
                 <button class="pure-button" style="display:inline" ng-click="addChatMessage()" title="Submit">
                     <i class="fa fa-keyboard-o"></i>
+                </button>
             </div>
         </div>
         <legend> </legend>
@@ -31,18 +32,27 @@
                 <td>
                     <span style="float: left; text-align: left"> {$message.content$} </span>
                     <span style="float: right; text-align: right" ng-show="!message.event_time">
-                    	<i class="fa fa-cog fa-spin"></i>
+                        <i class="fa fa-cog fa-spin"></i>
                     </span>
                     <span style="float: right; text-align: right" ng-show="message.event_time && message.event_time != 'Error'">
-                    	<i class="fa fa-check fa-2" style="color:green"></i>
-                    	{$message.event_time$}
+                        <i class="fa fa-check fa-2" style="color:green"></i>
+                        {$message.event_time$}
                     </span>
                     <span style="float: right; text-align: right" ng-show="message.event_time && message.event_time == 'Error'">
-                    	<i class="fa fa-times fa-3" style="color:red"></i> 
-                    	{$message.event_time$}
+                        <i class="fa fa-times fa-3" style="color:red"></i> 
+                        {$message.event_time$}
+                    </span>
+                    <span>
+                            <a href="#/entry#overlay">
+                                <i class="fa fa-pencil-square-o" title="Edit" ></i>
+                            </a>
                     </span>
                 </td>
             </tr>
         </table>
     </div>
+</div>
+<div id="mask" onclick="document.location='#';"></div>
+<div class="content" style="position:relative;z-index:5;display:none" id="overlay">
+    fhsdfhsdfj skdhfksd fhds kshfk sdfhksd ksfhdks dskfhkd fhdkf dsh
 </div>

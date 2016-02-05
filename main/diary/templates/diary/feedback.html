@@ -4,10 +4,24 @@
         <legend style="text-align:center">
             <i class="fa fa-pencil-square-o"></i> Feedback
         </legend>
-        <textarea class="pure-input-1" style="display:block" rows="10" placeholder="Your Feedback . . .">
+        <textarea class="pure-input-1" style="display:block" rows="10" placeholder="Your Feedback . . ." ng-model="feedbackContent">
         </textarea>
-        <button class="pure-button" title="Submit">
+        <button class="pure-button" title="Submit" ng-click="submitFeedback()" ng-disabled="!feedbackContent">
             <i class="fa fa-keyboard-o fa-3">  Submit </i>
         </button>
+        <button class="pure-button" title="Reset" ng-click="resetText()" ng-disabled="!feedbackContent">
+            <i class="fa fa-keyboard-o fa-3">  Reset </i>
+        </button>
+        <span style="float: right; text-align: right" ng-show="feedback_sent == 'progress'" >
+            <i class="fa fa-cog fa-spin"></i>
+        </span>
+        <span style="float: right; text-align: right" ng-show="feedback_submitted && feedback_sent == 'true'">
+            <i class="fa fa-check fa-2" style="color:green"></i>
+                Thank You for your feedback . . .
+         </span>
+        <span style="float: right; text-align: right" ng-show="feedback_submitted && feedback_sent == 'false'">
+            <i class="fa fa-times fa-3" style="color:red"></i> 
+                A Network Error occurred. Please Resend.
+        </span>
     </form>
 </div>
