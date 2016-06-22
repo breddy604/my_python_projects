@@ -20,6 +20,9 @@ def about(request):
 def event_page(request):
 	return render(request,'event_page.html')
 
+def passport(request):
+    return render(request,'passport.html')
+
 def view_all_events(request, source):
     if source == 'viewForce' :
         return render(request,'view_all_events.html' , {'p_title' : 'View All Force Allocated', 'p_next_url' : 'view_all_force'})
@@ -146,6 +149,11 @@ def get_free_force(request,event_id,point_id):
             t['checked'] = True
         else:
             t['checked'] = False
+    return HttpResponse(json.dumps(toReturn))
+
+def get_allotted_pc(request,event_id,point_id):
+    all_force = EventParticipant.objects.filter(Q(p_pp_id = point_id) & Q(p_designation = 'PC'), p_event_id=event_id )
+    toReturn = add_unique_results(all_force)
     return HttpResponse(json.dumps(toReturn))
 
 def get_all_ppoints(request, event_id):

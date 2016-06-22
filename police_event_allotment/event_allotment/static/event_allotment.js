@@ -53,6 +53,10 @@ ea.config(function($routeProvider) {
             templateUrl: '/view_dispatch_force_page',
             controller: 'eventAllotmentController'
         })
+        .when('/passport', {
+            templateUrl: '/passport',
+            controller: 'eventAllotmentController'
+        })
         .otherwise({ templateUrl: '/about' });
 });
 
@@ -151,6 +155,22 @@ ea.controller("eventAllotmentController", function($scope, eventAllotmentStorage
 
         );
     };
+
+    $scope.getAllPCForce = function() {
+        console.log("Get Alllotted PC clicked");
+        eventAllotmentStorage.get_all_objects('/get_allotted_pc/' + $routeParams.event_id+ '/' + $routeParams.point_id).then(
+            function(result) {
+                $scope.all_pc_force = result;
+                $scope.no_of_pcs = result.length
+            },
+            function(result) {
+                console.log("Error in getting all events");
+            }
+
+        );
+    };
+
+    
 
     $scope.callGetFreeForce = function() {
         console.log("Get All Force clicked");
