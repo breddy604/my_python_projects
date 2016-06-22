@@ -1,0 +1,35 @@
+<h4 class="text-center"> Select an Event to : {{ p_title }}</h4>
+<div ng-init="get_all_events()">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Place
+                </th>
+                <th>
+                    Duration
+                </th>
+                <th>
+                    Owner
+                </th>
+            </tr>
+        </thead>
+        <tr ng-repeat="p_event in all_events">
+            <td>
+                <a href="/#/{{p_next_url}}/{$p_event.pk$}/{$p_event.event_name$}">{$p_event.event_name$}</a>
+            </td>
+            <td>
+                {$p_event.event_place$}
+            </td>
+            <td>
+                {$p_event.event_duration$}
+            </td>
+            <td>
+                {$p_event.event_owner$}
+            </td>
+        </tr>
+    </table>
+</div>

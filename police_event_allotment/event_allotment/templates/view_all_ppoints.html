@@ -1,0 +1,17 @@
+<h4 class="text-center" ng-init="getPageName()"> You are viewing Picket Points for  : {$page_name$} </h4>
+<div ng-init="callPPoints()">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>
+                    Picket Point Name
+                </th>
+            </tr>
+        </thead>
+        <tr ng-repeat="pp_event in all_ppoints">
+            <td>
+                <a href="/#/view_dispatch_force_page/{$pp_event.ep_event_id$}/{$pp_event.pk$}">{$pp_event.ep_name$}</a> 
+            </td>
+        </tr>
+    </table>
+</div>
