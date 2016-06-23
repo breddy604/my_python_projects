@@ -152,7 +152,7 @@ def get_data_for_passport(request, event_id, point_id):
 
 
 def get_free_force(request,event_id,point_id):
-    all_force = EventParticipant.objects.filter((Q(p_pp_id = point_id) | Q(p_pp_id = '')) & Q(p_designation = 'SI'), p_event_id=event_id )
+    all_force = EventParticipant.objects.filter((Q(p_pp_id = point_id) | Q(p_pp_id = '')) & (Q(p_designation = 'SI') | Q(p_designation = 'CI') | Q(p_designation = 'DSP') | Q(p_designation = 'ASI') | Q(p_designation = 'HC')), p_event_id=event_id )
     toReturn = add_unique_results(all_force)
     for t in toReturn:
         if t['p_pp_id'] !='':
