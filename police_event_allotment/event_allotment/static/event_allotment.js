@@ -53,7 +53,7 @@ ea.config(function($routeProvider) {
             templateUrl: '/view_dispatch_force_page',
             controller: 'eventAllotmentController'
         })
-        .when('/passport', {
+        .when('/passport/:event_id/:point_id/', {
             templateUrl: '/passport',
             controller: 'eventAllotmentController'
         })
@@ -155,6 +155,20 @@ ea.controller("eventAllotmentController", function($scope, eventAllotmentStorage
 
         );
     };
+
+    $scope.getDataForPassport = function() {
+        console.log("Get passport clicked");
+        eventAllotmentStorage.get_object('/get_data_for_passport/' + $routeParams.event_id+ '/' + $routeParams.point_id).then(
+            function(result) {
+                $scope.passport_data = result;
+                $scope.force = angular.fromJson(result['force'])
+            },
+            function(result) {
+                console.log("Error in getting all events");
+            }
+
+        );
+    }
 
     $scope.getAllPCForce = function() {
         console.log("Get Alllotted PC clicked");

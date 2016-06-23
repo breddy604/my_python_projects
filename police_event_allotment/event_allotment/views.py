@@ -141,6 +141,16 @@ def get_all_force(request,event_id):
 
     return HttpResponse(json.dumps(toReturn))
 
+def get_data_for_passport(request, event_id, point_id):
+    all_force = EventParticipant.objects.filter(p_pp_id = point_id , p_event_id=event_id)
+    force_json = add_unique_results(all_force)
+    toReturn = {}
+    toReturn['event_name'] = PoliceEvent.objects.get(pk=event_id).event_name
+    toReturn['point_name'] = EventPicketPoint.objects.get(pk=point_id).ep_name
+    toReturn['force'] = force_json
+    return HttpResponse(json.dumps(toReturn))
+
+
 def get_free_force(request,event_id,point_id):
     all_force = EventParticipant.objects.filter((Q(p_pp_id = point_id) | Q(p_pp_id = '')) & Q(p_designation = 'SI'), p_event_id=event_id )
     toReturn = add_unique_results(all_force)

@@ -1,0 +1,41 @@
+<div class="container" ng-init="getDataForPassport()">
+    {% load staticfiles %}
+    <div class="text-center"> <h4>ANDHRA PRADESH POLICE DEPARTMENT </h4></div>
+    <div class="text-center"><img src="{% static 'logo.png' %}" /></div>
+    <div class="text-center"> <h4>DUTY PASSPORT</h4></div>
+    <table class="table table-bordered">
+        <tr>
+            <td class="text-center">District Special Branch</td>
+            <td class="text-center">Y.S.R District, Kadapa.</td>
+        </tr>
+        <tr>
+            <td>
+            <p ng-repeat="p in force"> {$p.p_name$}[{$p.p_code$}][{$p.p_designation$}] </span>
+            </td>
+            <td>
+                You are hereby instructed to:
+                <br> Go To : <strong> {$passport_data.point_name$} </strong>
+                <br> On : Date
+                <br> For bandobast of : <strong> {$passport_data.event_name$} </strong>
+                <br>
+            </td>
+        </tr>
+        <tr>
+            <td class="text-center">
+                <address>
+                    <br> District Special Branch
+                    <br> Y.S.R. District, Kadapa 516390
+                    <br>
+                </address>
+            </td>
+            <td class="text-center">
+                <address>
+                    <br> Dy. Supdt. of Police
+                    <br> District Special Branch
+                    <br> Y.S.R. District, Kadapa
+                    <br>
+                </address>
+            </td>
+        </tr>
+    </table>
+</div>

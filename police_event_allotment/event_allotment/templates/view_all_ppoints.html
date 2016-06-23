@@ -10,7 +10,10 @@
         </thead>
         <tr ng-repeat="pp_event in all_ppoints">
             <td>
-                <a href="/#/view_dispatch_force_page/{$pp_event.ep_event_id$}/{$pp_event.pk$}">{$pp_event.ep_name$}</a> 
+                <a href="/#/view_dispatch_force_page/{$pp_event.ep_event_id$}/{$pp_event.pk$}">{$pp_event.ep_name$}</a>
+            </td>
+            <td>
+                <a href="/#/passport/{$pp_event.ep_event_id$}/{$pp_event.pk$}" target="_blank">Generate Passport</a>
             </td>
         </tr>
     </table>

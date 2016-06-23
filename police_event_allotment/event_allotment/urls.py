@@ -25,4 +25,5 @@ url(r'^allot_pp$',views.allot_pp,name='allot_pp'),
 url(r'^get_event_name/(.*)$',views.get_event_name,name='get_event_name'),
 url(r'^get_point_name/(.*)$',views.get_point_name,name='get_point_name'),
 url(r'^get_allotted_pc/(.*)/(.*)$',views.get_allotted_pc,name='get_allotted_pc'),
+url(r'^get_data_for_passport/(.*)/(.*)$',views.get_data_for_passport,name='get_data_for_passport'),
 ]
