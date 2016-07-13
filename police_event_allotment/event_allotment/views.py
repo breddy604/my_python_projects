@@ -98,8 +98,11 @@ def dispatch_force(request, event_id, point_id, no_of_pcs):
 def create_event(input):
     pe = PoliceEvent(event_name=input['name'],
         event_place = input['place'],
-        event_duration = input['duration'],
-        event_owner = input['owner']
+        event_start_date = input['start_date'],
+        event_end_date = input['end_date'],
+        event_owner = input['owner'],
+        event_owner_branch = input['owner_branch'],
+        event_owner_district = input['owner_district']
         )
     return pe
 
@@ -146,13 +149,18 @@ def get_data_for_passport(request, event_id, point_id):
     force_json = add_unique_results(all_force)
     toReturn = {}
     toReturn['event_name'] = PoliceEvent.objects.get(pk=event_id).event_name
+    toReturn['event_owner'] = PoliceEvent.objects.get(pk=event_id).event_owner
+    toReturn['event_owner_branch'] = PoliceEvent.objects.get(pk=event_id).event_owner_branch
+    toReturn['event_owner_district'] = PoliceEvent.objects.get(pk=event_id).event_owner_district
+    toReturn['event_start_date'] = PoliceEvent.objects.get(pk=event_id).event_start_date
+    toReturn['event_end_date'] = PoliceEvent.objects.get(pk=event_id).event_end_date
     toReturn['point_name'] = EventPicketPoint.objects.get(pk=point_id).ep_name
     toReturn['force'] = force_json
     return HttpResponse(json.dumps(toReturn))
 
 
 def get_free_force(request,event_id,point_id):
-    all_force = EventParticipant.objects.filter((Q(p_pp_id = point_id) | Q(p_pp_id = '')) & (Q(p_designation = 'SI') | Q(p_designation = 'CI') | Q(p_designation = 'DSP') | Q(p_designation = 'ASI') | Q(p_designation = 'HC')), p_event_id=event_id )
+    all_force = EventParticipant.objects.filter((Q(p_pp_id = point_id) | Q(p_pp_id = '')), p_event_id=event_id )
     toReturn = add_unique_results(all_force)
     for t in toReturn:
         if t['p_pp_id'] !='':

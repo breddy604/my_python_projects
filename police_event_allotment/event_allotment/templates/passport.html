@@ -5,34 +5,38 @@
     <div class="text-center"> <h4>DUTY PASSPORT</h4></div>
     <table class="table table-bordered">
         <tr>
-            <td class="text-center">District Special Branch</td>
-            <td class="text-center">Y.S.R District, Kadapa.</td>
+            <td class="text-center">{$passport_data.event_owner_branch$}</td>
+            <td class="text-center">{$passport_data.event_owner_district$}</td>
         </tr>
         <tr>
             <td>
-            <p ng-repeat="p in force"> {$p.p_name$}[{$p.p_code$}][{$p.p_designation$}] </span>
+            <table class="table table-bordered">
+                <tr>
+                    <th>Name</th><th>ID</th><th>Designation</th>
+                </tr>
+                <tr ng-repeat="p in force">
+                    <td>{$p.p_name$}</td><td>{$p.p_code$}</td><td>{$p.p_designation$}</td>
+                </tr>
+            </table>
             </td>
             <td>
                 You are hereby instructed to:
                 <br> Go To : <strong> {$passport_data.point_name$} </strong>
-                <br> On : Date
+                <br> From : <strong>{$passport_data.event_start_date$}</strong>
+                <br> To : <strong>{$passport_data.event_end_date$}</strong>
                 <br> For bandobast of : <strong> {$passport_data.event_name$} </strong>
                 <br>
             </td>
         </tr>
         <tr>
             <td class="text-center">
-                <address>
-                    <br> District Special Branch
-                    <br> Y.S.R. District, Kadapa 516390
-                    <br>
-                </address>
+
             </td>
             <td class="text-center">
                 <address>
-                    <br> Dy. Supdt. of Police
-                    <br> District Special Branch
-                    <br> Y.S.R. District, Kadapa
+                    <br> {$passport_data.event_owner$}
+                    <br> {$passport_data.event_owner_branch$}
+                    <br> {$passport_data.event_owner_district$}
                     <br>
                 </address>
             </td>

@@ -148,6 +148,12 @@ ea.controller("eventAllotmentController", function($scope, eventAllotmentStorage
         eventAllotmentStorage.get_all_objects('/get_all_force/' + $routeParams.p_event_id).then(
             function(result) {
                 $scope.all_force = result;
+                $scope.summary = {'DSP': 0, 'CI' : 0 , 'SI' : 0 , 'ASI' : 0 , 'HC' : 0 , 'PC' : 0};
+                for(p in $scope.all_force){
+                    console.log(p);
+                    $scope.summary[$scope.all_force[p].p_designation] = $scope.summary[$scope.all_force[p].p_designation] + 1;
+                }
+
             },
             function(result) {
                 console.log("Error in getting all events");
@@ -256,7 +262,10 @@ ea.factory("Event", function getEventClass() {
         console.log("Creating Event " + defaults.name)
         this.name = defaults.name;
         this.place = defaults.place;
-        this.duration = defaults.duration;
+        this.start_date = defaults.start_date;
+        this.end_date = defaults.end_date;
+        this.owner_branch = defaults.owner_branch;
+        this.owner_district = defaults.owner_district;
         this.owner = defaults.owner;
     };
     return Event;

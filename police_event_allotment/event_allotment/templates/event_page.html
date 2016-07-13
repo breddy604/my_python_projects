@@ -17,15 +17,53 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="eventDurationId" class="col-sm-2 control-label">Event Duration</label>
+            <label for="datetimepicker1" class="col-sm-2 control-label">Event Start(Date & Time) </label>
+            <div class='col-sm-4'>
+                <div class='input-group date' id='datetimepicker1'>
+                    <input type='text' class="form-control" ng-model="event.start_date"/>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+            <script type="text/javascript">
+            (function() {
+                $('#datetimepicker1').datetimepicker();
+            })();
+            </script>
+        </div>
+        <div class="form-group">
+            <label for="datetimepicker2" class="col-sm-2 control-label">Event End (Date & Time) </label>
+            <div class='col-sm-4'>
+                <div class='input-group date' id='datetimepicker2'>
+                    <input type='text' class="form-control" ng-model="event.end_date"/>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+            <script type="text/javascript">
+            (function() {
+                $('#datetimepicker2').datetimepicker();
+            })();
+            </script>
+        </div>
+        <div class="form-group">
+            <label for="eventOwnerId" class="col-sm-2 control-label">Event Owner (Designation)</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="eventDurationId" ng-model="event.duration">
+                <input type="text" class="form-control" id="eventOwnerId" ng-model="event.owner">
             </div>
         </div>
         <div class="form-group">
-            <label for="eventOwnerId" class="col-sm-2 control-label">Event Owner</label>
+            <label for="eventOwnerId" class="col-sm-2 control-label">Event Owning Branch)</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="eventOwnerId" ng-model="event.owner">
+                <input type="text" class="form-control" id="eventOwnerId" ng-model="event.owner_branch">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="eventOwnerId" class="col-sm-2 control-label">Branch District</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="eventOwnerId" ng-model="event.owner_district">
             </div>
         </div>
         <div class="form-group">
@@ -35,13 +73,9 @@
                 <span ng-show="response.response && response.response == 'failure'"> XX An Error Occurred, Please submit again ! </span>
             </div>
         </div>
-
         <div class="col-sm-offset-2 col-sm-10" ng-show="response.response && response.response == 'success'">
-           Click to  <a href="/#/allot_pp/{$response.pk$}" target="_blank">Add Picket Points</a> to this event <br>
-           Click to  <a href="/#/allot_force/{$response.pk$}" target="_blank">Allot Force </a> to this event
+            Click to <a href="/#/allot_pp/{$response.pk$}" target="_blank">Add Picket Points</a> to this event
+            <br> Click to <a href="/#/allot_force/{$response.pk$}" target="_blank">Allot Force </a> to this event
         </div>
-
     </form>
-
-
 </div>
