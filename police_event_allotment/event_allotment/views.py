@@ -39,7 +39,15 @@ def view_all_events(request, source):
     if source == 'dispatchForce' :
         return render(request,'view_all_events.html' , {'p_title' : 'Dispatch Force to Points', 'p_next_url' : 'view_all_ppoints'})
 
+def list_events(request):
+    return render(request, 'list_events.html')
+
+def home(request):
+    return render(request, 'home.html')
     
+def manage_event(request, event_id):
+    e = PoliceEvent.objects.get(pk=event_id)
+    return render(request, 'manage_event.html' , {'p_title' : e.event_name , 'p_event_id' : event_id})
 
 def allot_force(request):
     return render(request,'allot_force.html')
@@ -76,7 +84,7 @@ def add_ppoint(request):
     po.save()
     return HttpResponse(po.pk)
 
-def dispatch_force(request, event_id, point_id, no_of_pcs):
+def dispatch_force(request, event_id, point_id):
     fl = json.loads(request.body)
     for f in fl:
         f_db = EventParticipant.objects.get(pk=f['pk'])
@@ -87,12 +95,6 @@ def dispatch_force(request, event_id, point_id, no_of_pcs):
         else:
             f_db.p_pp_id = ''
             f_db.save()
-    # Now get no_of_pcs number of constables and allot them.
-    flt = EventParticipant.objects.filter(Q(p_designation = 'PC') & Q(p_pp_id = ''), p_event_id=event_id)
-    for ep in flt:
-        ep.p_pp_id = point_id
-        ep.save()
-
     return HttpResponse("Success")
 
 def create_event(input):
@@ -111,6 +113,7 @@ def create_participant(input):
         p_code = input['p_code'],
         p_designation = input['p_designation'],
         p_contact = input['p_contact'],
+        p_gender = input['p_gender'],
         p_event_id = input['p_event_id']
         )
     return pe

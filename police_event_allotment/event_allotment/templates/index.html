@@ -3,18 +3,17 @@
 <head>
     <meta charset="utf-8"> {% load staticfiles %}
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
-    <link href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css" rel="stylesheet" />
-    <script src="{% static 'jquery.min.js' %}"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
-    <script src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
-    <script src="{% static 'angular.min.js' %}"></script>
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'sticky-footer-navbar.css' %}" />
     <script src="{% static 'event_allotment.js' %}"></script>
-    <script src="{% static 'angular-route.min.js' %}"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-route.min.js"></script>
 </head>
 
 <body ng-app="event_allotment">
@@ -23,29 +22,15 @@
         <div class="container">
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#">Home</a></li>
                     <li><a href="#event_page">New Event</a></li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manage Event<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li role="separator" class="divider"></li>
-                            <li class="dropdown-header">Picket Points</li>
-                            <li><a href="#view_all_events/addPPoint">Add </a></li>
-                            <li><a href="#view_all_events/viewPPoint">View </a></li>
-                            <li role="separator" class="divider"></li>
-                            <li class="dropdown-header">Police Force</li>
-                            <li><a href="#view_all_events/allotForce">Add</a></li>
-                            <li><a href="#view_all_events/viewForce">View</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#view_all_events/dispatchForce">Dispatch Force</a></li>
-                        </ul>
-                    </li>
+                    <li><a href="#list_events">Manage Event</a></li>
                 </ul>
             </div>
             <!--/.nav-collapse -->
         </div>
     </nav>
-    <div class="wrapper container" ng-view> </div>
+    <div class="wrapper container" ng-view > </div>
     <footer class="footer">
         <div class="container">
             <p class="text-muted">An e-Governance Initiative from Inspector of Police, Special Branch, Kadapa, A.P.</p>

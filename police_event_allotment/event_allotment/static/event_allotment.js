@@ -13,6 +13,14 @@ ea.config(function($routeProvider) {
             templateUrl: '/event_page',
             controller: 'eventAllotmentController'
         })
+        .when('/list_events', {
+            templateUrl: '/list_events',
+            controller: 'eventAllotmentController'
+        })
+        .when('/home', {
+            templateUrl: '/home',
+            controller: 'eventAllotmentController'
+        })
         .when('/view_all_events/addPPoint', {
             templateUrl: '/view_all_events/addPPoint',
             controller: 'eventAllotmentController'
@@ -33,19 +41,19 @@ ea.config(function($routeProvider) {
             templateUrl: '/view_all_events/dispatchForce',
             controller: 'eventAllotmentController'
         })
-        .when('/allot_force/:p_event_id/:page_name', {
+        .when('/allot_force/:p_event_id', {
             templateUrl: '/allot_force',
             controller: 'eventAllotmentController'
         })
-        .when('/view_all_ppoints/:p_event_id/:page_name', {
+        .when('/view_all_ppoints/:p_event_id', {
             templateUrl: '/view_all_ppoints',
             controller: 'eventAllotmentController'
         })
-        .when('/allot_pp/:p_event_id/:page_name', {
+        .when('/allot_pp/:p_event_id', {
             templateUrl: '/allot_pp',
             controller: 'eventAllotmentController'
         })
-        .when('/view_all_force/:p_event_id/:page_name', {
+        .when('/view_all_force/:p_event_id', {
             templateUrl: '/view_all_force',
             controller: 'eventAllotmentController'
         })
@@ -60,15 +68,17 @@ ea.config(function($routeProvider) {
         .otherwise({ templateUrl: '/about' });
 });
 
-ea.controller("eventAllotmentController", function($scope, eventAllotmentStorage, Event, Participant, PicketPoint, $routeParams) {
+ea.controller("globalController" , function($scope){
 
-    $scope.getPageName = function() {
-        $scope.page_name = $routeParams.page_name;
-    };
+});
+
+ea.controller("eventAllotmentController", function($scope, eventAllotmentStorage, Event, Participant, PicketPoint, $routeParams) {
 
     $scope.addEvent = function() {
         console.log("Add Event clicked " + $scope.event.name);
         if ($scope.event) {
+            $scope.event.end_date = document.getElementById("event_end_date").value;
+            $scope.event.start_date = document.getElementById("event_start_date").value;
             $scope.event = new Event($scope.event);
             $scope.response = {};
             eventAllotmentStorage.saveObject($scope.event, "/add_event", $scope.response);
@@ -113,7 +123,7 @@ ea.controller("eventAllotmentController", function($scope, eventAllotmentStorage
         if ($scope.all_force) {
             $scope.response = {};
             eventAllotmentStorage.saveObject($scope.all_force, "/dispatch_force/" +
-                $routeParams.event_id + "/" + $routeParams.point_id + "/" + $scope.no_of_pcs,
+                $routeParams.event_id + "/" + $routeParams.point_id,
                 $scope.response);
         }
     };
@@ -284,6 +294,7 @@ ea.factory("Participant", function getParticipantClass() {
         this.p_name = defaults.p_name;
         this.p_code = defaults.p_code;
         this.p_designation = defaults.p_designation;
+        this.p_gender = defaults.p_gender;
         this.p_contact = defaults.p_contact;
         this.p_event_id = defaults.p_event_id;
     };
