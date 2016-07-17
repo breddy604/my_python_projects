@@ -21,6 +21,29 @@
     </table>
 </div>
 <br>
+<div style="border-style:solid; border-width:1px ; border-color:#e5e5e5">
+    <h5 class="text-center">Allocation Summary By Gender</h5>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>
+                    Gender
+                </th>
+                <th>
+                    Count of Force
+                </th>
+        </thead>
+        <tr ng-repeat="(key,value) in gender_summary">
+            <td>
+                {$key$}
+            </td>
+            <td>
+                {$value$}
+            </td>
+        </tr>
+    </table>
+</div>
+<br>
 <div ng-init="callGetForce()" style="border-style:solid; border-width:1px ; border-color:#e5e5e5">
     <h5 class="text-center">Detailed Allocation of Force</h5>
     <table class="table table-hover">
@@ -45,7 +68,8 @@
         </thead>
         <tr ng-repeat="force in all_force">
             <td>
-                {$force.p_name$}
+                <a ng-show="force.p_pp_id" href="#/passport/{$force.p_event_id$}/{$force.p_pp_id$}/{$force.pk$}" target="_blank">{$force.p_name$}</a>
+                <span ng-show="!force.p_pp_id">{$force.p_name$}</span>
             </td>
             <td>
                 {$force.p_code$}
@@ -57,7 +81,7 @@
                 {$force.p_designation$}
             </td>
             <td>
-                {$force.p_pp_id$}
+                {$force.p_pp_name$}
             </td>
         </tr>
     </table>

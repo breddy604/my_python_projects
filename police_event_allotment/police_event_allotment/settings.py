@@ -77,8 +77,11 @@ WSGI_APPLICATION = 'police_event_allotment.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'appolice',
+            'USER' : 'root',
+            'PASSWORD' : 'Public123',
+            'default-character-set' : 'utf8'
     }
 }
 

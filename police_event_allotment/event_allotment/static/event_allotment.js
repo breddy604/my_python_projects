@@ -65,10 +65,14 @@ ea.config(function($routeProvider) {
             templateUrl: '/passport',
             controller: 'eventAllotmentController'
         })
+        .when('/passport/:event_id/:point_id/:person_id/', {
+            templateUrl: '/passport',
+            controller: 'eventAllotmentController'
+        })
         .otherwise({ templateUrl: '/about' });
 });
 
-ea.controller("globalController" , function($scope){
+ea.controller("globalController", function($scope) {
 
 });
 
@@ -158,10 +162,12 @@ ea.controller("eventAllotmentController", function($scope, eventAllotmentStorage
         eventAllotmentStorage.get_all_objects('/get_all_force/' + $routeParams.p_event_id).then(
             function(result) {
                 $scope.all_force = result;
-                $scope.summary = {'DSP': 0, 'CI' : 0 , 'SI' : 0 , 'ASI' : 0 , 'HC' : 0 , 'PC' : 0};
-                for(p in $scope.all_force){
+                $scope.summary = { 'DSP': 0, 'CI': 0, 'SI': 0, 'ASI': 0, 'HC': 0, 'PC': 0 };
+                $scope.gender_summary = { 'M': 0, 'F': 0 };
+                for (p in $scope.all_force) {
                     console.log(p);
                     $scope.summary[$scope.all_force[p].p_designation] = $scope.summary[$scope.all_force[p].p_designation] + 1;
+                    $scope.gender_summary[$scope.all_force[p].p_gender] = $scope.gender_summary[$scope.all_force[p].p_gender] + 1;
                 }
 
             },
@@ -174,7 +180,7 @@ ea.controller("eventAllotmentController", function($scope, eventAllotmentStorage
 
     $scope.getDataForPassport = function() {
         console.log("Get passport clicked");
-        eventAllotmentStorage.get_object('/get_data_for_passport/' + $routeParams.event_id+ '/' + $routeParams.point_id).then(
+        eventAllotmentStorage.get_object('/get_data_for_passport/' + $routeParams.event_id + '/' + $routeParams.point_id + '/' + $routeParams.person_id).then(
             function(result) {
                 $scope.passport_data = result;
                 $scope.force = angular.fromJson(result['force'])
@@ -188,7 +194,7 @@ ea.controller("eventAllotmentController", function($scope, eventAllotmentStorage
 
     $scope.getAllPCForce = function() {
         console.log("Get Alllotted PC clicked");
-        eventAllotmentStorage.get_all_objects('/get_allotted_pc/' + $routeParams.event_id+ '/' + $routeParams.point_id).then(
+        eventAllotmentStorage.get_all_objects('/get_allotted_pc/' + $routeParams.event_id + '/' + $routeParams.point_id).then(
             function(result) {
                 $scope.all_pc_force = result;
                 $scope.no_of_pcs = result.length
@@ -200,7 +206,7 @@ ea.controller("eventAllotmentController", function($scope, eventAllotmentStorage
         );
     };
 
-    
+
 
     $scope.callGetFreeForce = function() {
         console.log("Get All Force clicked");

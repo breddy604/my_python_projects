@@ -143,12 +143,15 @@ def get_all_force(request,event_id):
     for f in toReturn:
         if f['p_pp_id'] != '':
             p = EventPicketPoint.objects.get(pk=f['p_pp_id'])
-            f['p_pp_id'] = p.ep_name
+            f['p_pp_name'] = p.ep_name
 
     return HttpResponse(json.dumps(toReturn))
 
-def get_data_for_passport(request, event_id, point_id):
-    all_force = EventParticipant.objects.filter(p_pp_id = point_id , p_event_id=event_id)
+def get_data_for_passport(request, event_id, point_id, person_id=''):
+    if(person_id == 'undefined'):
+        all_force = EventParticipant.objects.filter(p_pp_id = point_id , p_event_id=event_id)
+    else:
+        all_force = EventParticipant.objects.filter(pk= person_id)
     force_json = add_unique_results(all_force)
     toReturn = {}
     toReturn['event_name'] = PoliceEvent.objects.get(pk=event_id).event_name

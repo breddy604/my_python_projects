@@ -28,7 +28,7 @@
             </div>
             <script type="text/javascript">
             (function() {
-                $('#datetimepicker1').datetimepicker();
+                $('#datetimepicker1').datetimepicker({format : 'DD-MMM-YYYY hh:mm:ss A'});
             })();
             </script>
         </div>
@@ -44,7 +44,7 @@
             </div>
             <script type="text/javascript">
             (function() {
-                $('#datetimepicker2').datetimepicker();
+                $('#datetimepicker2').datetimepicker({format : 'DD-MMM-YYYY hh:mm:ss A'});
             })();
             </script>
         </div>
@@ -74,8 +74,8 @@
             </div>
         </div>
         <div class="col-sm-offset-2 col-sm-10" ng-show="response.response && response.response == 'success'">
-            Click to <a href="/#/allot_pp/{$response.pk$}" target="_blank">Add Picket Points</a> to this event
-            <br> Click to <a href="/#/allot_force/{$response.pk$}" target="_blank">Allot Force </a> to this event
+            Click to <a href="/manage_event/{$response.pk$}/#/allot_pp/{$response.pk$}" target="_blank">Add Picket Points</a> to this event
+            <br> Click to <a href="/manage_event/{$response.pk$}/#/allot_force/{$response.pk$}" target="_blank">Allot Force </a> to this event
         </div>
     </form>
 </div>
