@@ -1,6 +1,6 @@
 <div class="container" ng-controller="eventAllotmentController">
     {% csrf_token %}
-    <h4 class="text-center" >  -- Add Force -- </h4>
+    <h4 class="text-center">  -- Add Force -- </h4>
     <form class="form-horizontal">
         <div class="form-group">
             <label for="pName" class="col-sm-2 control-label">Name</label>
@@ -45,6 +45,7 @@
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <button type="submit" class="btn btn-default" ng-click="addParticipant()">Submit</button>
+                <span ng-show="response && !response.response"><i class="fa fa-spinner fa-spin fa-2x fa-fw"></i></span>
                 <span ng-show="response.response && response.response == 'success'"> Successfully Submitted ! </span>
                 <span ng-show="response.response && response.response == 'failure'"> XX An Error Occurred, Please submit again ! </span>
             </div>
