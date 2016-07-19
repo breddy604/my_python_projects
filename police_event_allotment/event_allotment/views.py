@@ -2,10 +2,13 @@ from django.shortcuts import render
 
 from django.http import HttpResponse
 from django.core import serializers
+from django.forms.models import model_to_dict
 
 from django.db.models import Q
 
 from models import PoliceEvent,EventParticipant,EventPicketPoint
+
+from django.contrib.auth.decorators import login_required
 
 import json
 
@@ -72,6 +75,24 @@ def add_event(request):
     event.save()
     return HttpResponse(event.pk)
 
+def get_event(request, event_id):
+    pe = PoliceEvent.objects.get(pk=event_id)
+
+    return HttpResponse(json.dumps(model_to_dict(pe)))
+
+def update_event(request,event_id):
+    pe = PoliceEvent.objects.get(pk=event_id)
+    input = json.loads(request.body)
+    pe.event_name=input['event_name']
+    pe.event_place = input['event_place']
+    pe.event_start_date = input['event_start_date']
+    pe.event_end_date = input['event_end_date']
+    pe.event_owner = input['event_owner']
+    pe.event_owner_branch = input['event_owner_branch']
+    pe.event_owner_district = input['event_owner_district']
+    pe.save()
+    return HttpResponse(event_id)
+
 def add_participant(request):
     p = json.loads(request.body)
     po = create_participant(p)
@@ -98,13 +119,13 @@ def dispatch_force(request, event_id, point_id):
     return HttpResponse("Success")
 
 def create_event(input):
-    pe = PoliceEvent(event_name=input['name'],
-        event_place = input['place'],
-        event_start_date = input['start_date'],
-        event_end_date = input['end_date'],
-        event_owner = input['owner'],
-        event_owner_branch = input['owner_branch'],
-        event_owner_district = input['owner_district']
+    pe = PoliceEvent(event_name=input['event_name'],
+        event_place = input['event_place'],
+        event_start_date = input['event_start_date'],
+        event_end_date = input['event_end_date'],
+        event_owner = input['event_owner'],
+        event_owner_branch = input['event_owner_branch'],
+        event_owner_district = input['event_owner_district']
         )
     return pe
 

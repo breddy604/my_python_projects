@@ -1,37 +1,45 @@
 <div class="container" ng-init="getDataForPassport()">
     {% load staticfiles %}
-    <div class="text-center"> <h4>ANDHRA PRADESH POLICE DEPARTMENT </h4></div>
+    <div class="text-center">
+        <h4>ANDHRA PRADESH POLICE DEPARTMENT </h4></div>
     <div class="text-center"><img src="{% static 'logo.png' %}" /></div>
-    <div class="text-center"> <h4>DUTY PASSPORT</h4></div>
+    <div class="text-center">
+        <h4>DUTY PASSPORT</h4></div>
     <table class="table table-bordered">
         <tr>
-            <td class="text-center">{$passport_data.event_owner_branch$}</td>
-            <td class="text-center">{$passport_data.event_owner_district$}</td>
+            <td class="text-center">
+                {$passport_data.event_owner_branch$} <br> {$passport_data.event_owner_district$}
+            </td>
         </tr>
         <tr>
             <td>
-            <table class="table table-bordered">
-                <tr>
-                    <th>Name</th><th>ID</th><th>Designation</th><th>Gender</th>
-                </tr>
-                <tr ng-repeat="p in force">
-                    <td>{$p.p_name$}</td><td>{$p.p_code$}</td><td>{$p.p_designation$}</td><td>{$p.p_gender$}</td>
-                </tr>
-            </table>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Name</th>
+                        <th>ID</th>
+                        <th>Designation</th>
+                        <th>Mobile</th>
+                    </tr>
+                    <tr ng-repeat="p in force">
+                        <td>{$p.p_name$}</td>
+                        <td>{$p.p_code$}</td>
+                        <td>{$p.p_designation$}</td>
+                        <td>{$p.p_contact$}</td>
+                    </tr>
+                </table>
             </td>
+        </tr>
+        <tr>
             <td>
                 You are hereby instructed to:
                 <br> Go To : <strong> {$passport_data.point_name$} </strong>
                 <br> For bandobast of : <strong> {$passport_data.event_name$} </strong>
-                <br>
+                <br> Scheduled to Start @: <strong>{$passport_data.event_start_date$} </strong>
+                <br> Scheduled to End @ : <strong>{$passport_data.event_end_date$}</strong>
             </td>
         </tr>
         <tr>
-            <td class="text-center">
-                <br> Scheduled to Start @: <strong>{$passport_data.event_start_date$} </strong>
-                <br> Scheduled to End @ : <strong>{$passport_data.event_end_date$}</strong> 
-            </td>
-            <td class="text-center">
+            <td class="text-right">
                 <address>
                     <br> {$passport_data.event_owner$}
                     <br> {$passport_data.event_owner_branch$}

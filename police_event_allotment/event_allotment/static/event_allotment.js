@@ -13,6 +13,10 @@ ea.config(function($routeProvider) {
             templateUrl: '/event_page',
             controller: 'eventAllotmentController'
         })
+        .when('/edit_event', {
+            templateUrl: '/event_page',
+            controller: 'eventAllotmentController'
+        })
         .when('/list_events', {
             templateUrl: '/list_events',
             controller: 'eventAllotmentController'
@@ -81,12 +85,29 @@ ea.controller("eventAllotmentController", function($scope, eventAllotmentStorage
     $scope.addEvent = function() {
         console.log("Add Event clicked " + $scope.event.name);
         if ($scope.event) {
-            $scope.event.end_date = document.getElementById("event_end_date").value;
-            $scope.event.start_date = document.getElementById("event_start_date").value;
-            $scope.event = new Event($scope.event);
+            $scope.event.event_end_date = document.getElementById("event_end_date").value;
+            $scope.event.event_start_date = document.getElementById("event_start_date").value;
             $scope.response = {};
-            eventAllotmentStorage.saveObject($scope.event, "/add_event", $scope.response);
-            $scope.event = undefined;
+            if ($scope.event.id) {
+                var new_event = new Event($scope.event);
+                eventAllotmentStorage.saveObject(new_event, "/update_event/"+$scope.event.id +'/', $scope.response);
+            } else {
+                $scope.event = new Event($scope.event);
+                eventAllotmentStorage.saveObject($scope.event, "/add_event", $scope.response);
+                $scope.event = undefined;
+            }
+        }
+    };
+
+    $scope.getEventIfExists = function() {
+
+        console.log("Event Id " + $scope.event_id);
+        if ($scope.event_id) {
+            eventAllotmentStorage.get_object("/get_event/" + $scope.event_id).then(
+                function(result) {
+                    $scope.event = angular.fromJson(result);
+                }
+            );
         }
     };
 
@@ -275,14 +296,14 @@ ea.service("eventAllotmentStorage", function($http, $window) {
 
 ea.factory("Event", function getEventClass() {
     function Event(defaults) {
-        console.log("Creating Event " + defaults.name)
-        this.name = defaults.name;
-        this.place = defaults.place;
-        this.start_date = defaults.start_date;
-        this.end_date = defaults.end_date;
-        this.owner_branch = defaults.owner_branch;
-        this.owner_district = defaults.owner_district;
-        this.owner = defaults.owner;
+        console.log("Creating Event " + defaults.event_name)
+        this.event_name = defaults.event_name;
+        this.event_place = defaults.event_place;
+        this.event_start_date = defaults.event_start_date;
+        this.event_end_date = defaults.event_end_date;
+        this.event_owner_branch = defaults.event_owner_branch;
+        this.event_owner_district = defaults.event_owner_district;
+        this.event_owner = defaults.event_owner;
     };
     return Event;
 });

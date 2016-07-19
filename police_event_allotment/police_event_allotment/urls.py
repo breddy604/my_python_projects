@@ -20,3 +20,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('event_allotment.urls')),
 ]
+
+admin.site.site_header = 'PBMS Admin'
