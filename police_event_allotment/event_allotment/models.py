@@ -13,7 +13,7 @@ class EventParticipant(models.Model):
 	p_name = models.CharField(max_length=200)
 	p_code = models.CharField(max_length=200)
 	p_designation = models.CharField(max_length=200)
-	p_gender = models.CharField(max_length=2)
+	p_ps = models.CharField(max_length=2)
 	p_contact = models.CharField(max_length=200)
 	p_event_id = models.CharField(max_length=200)
 	p_pp_id = models.CharField(max_length=200)

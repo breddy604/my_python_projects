@@ -17,14 +17,16 @@
                     <tr>
                         <th>Name</th>
                         <th>ID</th>
-                        <th>Designation</th>
+                        <th>RNK</th>
                         <th>Mobile</th>
+                        <th>PS</th>
                     </tr>
                     <tr ng-repeat="p in force">
                         <td>{$p.p_name$}</td>
                         <td>{$p.p_code$}</td>
                         <td>{$p.p_designation$}</td>
                         <td>{$p.p_contact$}</td>
+                        <td>{$p.p_ps$}</td>
                     </tr>
                 </table>
             </td>
@@ -39,7 +41,7 @@
             </td>
         </tr>
         <tr>
-            <td class="text-right">
+            <td class="text-center">
                 <address>
                     <br> {$passport_data.event_owner$}
                     <br> {$passport_data.event_owner_branch$}

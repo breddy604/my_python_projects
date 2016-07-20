@@ -183,12 +183,11 @@ ea.controller("eventAllotmentController", function($scope, eventAllotmentStorage
         eventAllotmentStorage.get_all_objects('/get_all_force/' + $routeParams.p_event_id).then(
             function(result) {
                 $scope.all_force = result;
-                $scope.summary = { 'DSP': 0, 'CI': 0, 'SI': 0, 'ASI': 0, 'HC': 0, 'PC': 0 };
+                $scope.summary = { 'DSP': 0, 'CI': 0, 'SI': 0, 'WSI': 0,  'ASI': 0, 'WASI': 0 ,'HC': 0, 'WHC': 0 , 'PC': 0 , 'WPC': 0};
                 $scope.gender_summary = { 'M': 0, 'F': 0 };
                 for (p in $scope.all_force) {
                     console.log(p);
                     $scope.summary[$scope.all_force[p].p_designation] = $scope.summary[$scope.all_force[p].p_designation] + 1;
-                    $scope.gender_summary[$scope.all_force[p].p_gender] = $scope.gender_summary[$scope.all_force[p].p_gender] + 1;
                 }
 
             },
@@ -321,8 +320,8 @@ ea.factory("Participant", function getParticipantClass() {
         this.p_name = defaults.p_name;
         this.p_code = defaults.p_code;
         this.p_designation = defaults.p_designation;
-        this.p_gender = defaults.p_gender;
         this.p_contact = defaults.p_contact;
+        this.p_ps = defaults.p_ps;
         this.p_event_id = defaults.p_event_id;
     };
     return Participant;

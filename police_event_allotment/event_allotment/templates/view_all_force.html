@@ -21,29 +21,6 @@
     </table>
 </div>
 <br>
-<div style="border-style:solid; border-width:1px ; border-color:#e5e5e5">
-    <h5 class="text-center">Allocation Summary By Gender</h5>
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>
-                    Gender
-                </th>
-                <th>
-                    Count of Force
-                </th>
-        </thead>
-        <tr ng-repeat="(key,value) in gender_summary">
-            <td>
-                {$key$}
-            </td>
-            <td>
-                {$value$}
-            </td>
-        </tr>
-    </table>
-</div>
-<br>
 <div ng-init="callGetForce()" style="border-style:solid; border-width:1px ; border-color:#e5e5e5">
     <h5 class="text-center">Detailed Allocation of Force</h5>
     <table class="table table-hover">
@@ -56,10 +33,10 @@
                     Code
                 </th>
                 <th>
-                    Gender
+                    Rank
                 </th>
                 <th>
-                    Designation
+                    PS
                 </th>
                 <th>
                     Allotted To
@@ -75,10 +52,10 @@
                 {$force.p_code$}
             </td>
             <td>
-                {$force.p_gender$}
+                {$force.p_designation$}
             </td>
             <td>
-                {$force.p_designation$}
+                {$force.p_ps$}
             </td>
             <td>
                 {$force.p_pp_name$}

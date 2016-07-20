@@ -134,7 +134,7 @@ def create_participant(input):
         p_code = input['p_code'],
         p_designation = input['p_designation'],
         p_contact = input['p_contact'],
-        p_gender = input['p_gender'],
+        p_ps = input['p_ps'],
         p_event_id = input['p_event_id']
         )
     return pe

@@ -10,7 +10,6 @@
                 <th>Name</th>
                 <th>Code</th>
                 <th>Designation</th>
-                <th>Gender</th>
             </thead>
             <tr ng-repeat="force in all_force">
                 <td>
@@ -21,7 +20,6 @@
                 <td>{$force.p_name$}</td>
                 <td>{$force.p_code$}</td>
                 <td>{$force.p_designation$}</td>
-                <td>{$force.p_gender$}</td>
             </tr>
         </table>
     </div>
@@ -31,13 +29,11 @@
                 <th>Name</th>
                 <th>Code</th>
                 <th>Designation</th>
-                <th>Gender</th>
             </thead>
             <tr ng-repeat="force in all_force" ng-show="force.checked">
                 <td>{$force.p_name$}</td>
                 <td>{$force.p_code$}</td>
                 <td>{$force.p_designation$}</td>
-                <td>{$force.p_gender$}</td>
             </tr>
         </table>
     </div>
