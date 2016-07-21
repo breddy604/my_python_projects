@@ -90,7 +90,7 @@ ea.controller("eventAllotmentController", function($scope, eventAllotmentStorage
             $scope.response = {};
             if ($scope.event.id) {
                 var new_event = new Event($scope.event);
-                eventAllotmentStorage.saveObject(new_event, "/update_event/"+$scope.event.id +'/', $scope.response);
+                eventAllotmentStorage.saveObject(new_event, "/update_event/" + $scope.event.id + '/', $scope.response);
             } else {
                 $scope.event = new Event($scope.event);
                 eventAllotmentStorage.saveObject($scope.event, "/add_event", $scope.response);
@@ -183,7 +183,7 @@ ea.controller("eventAllotmentController", function($scope, eventAllotmentStorage
         eventAllotmentStorage.get_all_objects('/get_all_force/' + $routeParams.p_event_id).then(
             function(result) {
                 $scope.all_force = result;
-                $scope.summary = { 'DSP': 0, 'CI': 0, 'SI': 0, 'WSI': 0,  'ASI': 0, 'WASI': 0 ,'HC': 0, 'WHC': 0 , 'PC': 0 , 'WPC': 0};
+                $scope.summary = { 'DSP': 0, 'CI': 0, 'SI': 0, 'WSI': 0, 'ASI': 0, 'WASI': 0, 'HC': 0, 'WHC': 0, 'PC': 0, 'WPC': 0 };
                 $scope.gender_summary = { 'M': 0, 'F': 0 };
                 for (p in $scope.all_force) {
                     console.log(p);
@@ -203,7 +203,7 @@ ea.controller("eventAllotmentController", function($scope, eventAllotmentStorage
         eventAllotmentStorage.get_object('/get_data_for_passport/' + $routeParams.event_id + '/' + $routeParams.point_id + '/' + $routeParams.person_id).then(
             function(result) {
                 $scope.passport_data = result;
-                $scope.force = angular.fromJson(result['force'])
+                $scope.force = sort_by_rank(angular.fromJson(result['force']));
             },
             function(result) {
                 console.log("Error in getting all events");
@@ -233,7 +233,7 @@ ea.controller("eventAllotmentController", function($scope, eventAllotmentStorage
         $scope.point_id = $routeParams.point_id;
         eventAllotmentStorage.get_all_objects('/get_free_force/' + $routeParams.event_id + '/' + $routeParams.point_id).then(
             function(result) {
-                $scope.all_force = result;
+                $scope.all_force = sort_by_rank(result);
             },
             function(result) {
                 console.log("Error in getting all events");
@@ -241,6 +241,24 @@ ea.controller("eventAllotmentController", function($scope, eventAllotmentStorage
 
         );
     };
+
+    function sort_by_rank(result) {
+        var force_by_rank = { 'DSP': [], 'CI': [], 'SI': [], 'WSI': [], 'ASI': [], 'WASI': [], 'HC': [], 'WHC': [], 'PC': [], 'WPC': [] }
+
+        for (f in result) {
+            force_by_rank[result[f].p_designation].push(result[f]);
+        }
+
+        console.log(force_by_rank);
+
+        var to_return = [];
+        for (f in force_by_rank) {
+            console.log(force_by_rank[f]);
+            to_return = to_return.concat(force_by_rank[f]);
+        }
+
+        return to_return;
+    }
 
     $scope.get_all_events = function() {
         console.log("Get All events clicked");
