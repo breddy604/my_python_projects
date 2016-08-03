@@ -41,13 +41,20 @@
                         </ul>
                     </li>
                     <li> <a href="#">Event Name : {{ p_title }} </a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User : {{ loggedin_user }}<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/logout">Logout </a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
             <!--/.nav-collapse -->
         </div>
         <div ng-init="event_id='{{ p_event_id }}'" />
     </nav>
-    <div class="wrapper container" ng-view> </div>
+    <div class="wrapper container" id="contentView" ng-view> </div>
     <footer class="footer">
         <div class="container">
             <p class="text-muted">An e-Governance Initiative from Inspector of Police, Special Branch, Kadapa, A.P.</p>

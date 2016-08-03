@@ -13,6 +13,10 @@ ea.config(function($routeProvider) {
             templateUrl: '/event_page',
             controller: 'eventAllotmentController'
         })
+        .when('/login_page', {
+            templateUrl: '/login_page',
+            controller: 'eventAllotmentController'
+        })
         .when('/edit_event', {
             templateUrl: '/event_page',
             controller: 'eventAllotmentController'
@@ -80,7 +84,7 @@ ea.controller("globalController", function($scope) {
 
 });
 
-ea.controller("eventAllotmentController", function($scope, eventAllotmentStorage, Event, Participant, PicketPoint, $routeParams) {
+ea.controller("eventAllotmentController", function($scope, eventAllotmentStorage, Event, Participant, PicketPoint, $routeParams, $window) {
 
     $scope.addEvent = function() {
         console.log("Add Event clicked " + $scope.event.name);
@@ -109,6 +113,19 @@ ea.controller("eventAllotmentController", function($scope, eventAllotmentStorage
                 }
             );
         }
+    };
+
+    $scope.login = function() {
+            $scope.response = {};
+
+            eventAllotmentStorage.login($scope.user,  "/login").then(
+                function(result) {
+                    if(result == 'success'){
+                        $scope.response.response = result;
+                        $window.location.href = '/';
+                    }
+                }
+            );
     };
 
     $scope.setEventName = function() {
@@ -182,9 +199,8 @@ ea.controller("eventAllotmentController", function($scope, eventAllotmentStorage
         console.log("Get All Force clicked");
         eventAllotmentStorage.get_all_objects('/get_all_force/' + $routeParams.p_event_id).then(
             function(result) {
-                $scope.all_force = result;
+                $scope.all_force = sort_by_rank(result);
                 $scope.summary = { 'DSP': 0, 'CI': 0, 'SI': 0, 'WSI': 0, 'ASI': 0, 'WASI': 0, 'HC': 0, 'WHC': 0, 'PC': 0, 'WPC': 0 };
-                $scope.gender_summary = { 'M': 0, 'F': 0 };
                 for (p in $scope.all_force) {
                     console.log(p);
                     $scope.summary[$scope.all_force[p].p_designation] = $scope.summary[$scope.all_force[p].p_designation] + 1;
@@ -301,6 +317,17 @@ ea.service("eventAllotmentStorage", function($http, $window) {
             }
         );
     }
+
+    this.login = function(object, post_url) {
+        return $http.post(post_url, object, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(
+            function(response) {
+                return response.data
+            });
+    };
 
     this.get_object = function(get_url) {
         return $http.get(get_url).then(

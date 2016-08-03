@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponseRedirect
 
 from django.http import HttpResponse
 from django.core import serializers
@@ -10,12 +10,16 @@ from models import PoliceEvent,EventParticipant,EventPicketPoint
 
 from django.contrib.auth.decorators import login_required
 
-import json
+from django.contrib.auth import authenticate
+
+from django.contrib import auth
+
+import json, time
 
 # Create your views here.
 
 def index(request):
-	return render(request,'index.html')
+	return render(request,'index.html',  {'loggedin_user' : request.user})
 
 def about(request):
     return render(request,'about.html')
@@ -25,6 +29,9 @@ def event_page(request):
 
 def passport(request):
     return render(request,'passport.html')
+
+def login_page(request):
+    return render(request,'login.html')
 
 def view_all_events(request, source):
     if source == 'viewForce' :
@@ -50,7 +57,7 @@ def home(request):
     
 def manage_event(request, event_id):
     e = PoliceEvent.objects.get(pk=event_id)
-    return render(request, 'manage_event.html' , {'p_title' : e.event_name , 'p_event_id' : event_id})
+    return render(request, 'manage_event.html' , {'p_title' : e.event_name , 'p_event_id' : event_id,  'loggedin_user' : request.user})
 
 def allot_force(request):
     return render(request,'allot_force.html')
@@ -67,6 +74,26 @@ def view_all_force(request):
 def view_dispatch_force_page(request):
     return render(request,"dispatch_force_to_points.html")
 
+def login(request):
+    user_info = json.loads(request.body)
+    time.sleep(5)
+    user = authenticate(username=user_info['username'], password=user_info['password'])
+    if user is not None:
+        # the password verified for the user
+        if user.is_active:
+            auth.login(request,user)
+            print "User is valid, active and authenticated" 
+            return HttpResponse("success");
+        else:
+            print "The password is valid, but the account has been disabled!" 
+    else:
+        # the authentication system was unable to verify the username and password
+        print("The username and password were incorrect.")
+    return HttpResponse("failure");
+
+def logout(request):
+    auth.logout(request)
+    return HttpResponseRedirect('/#/')
 
 
 def add_event(request):
