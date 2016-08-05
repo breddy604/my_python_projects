@@ -356,6 +356,7 @@ ea.factory("PicketPoint", function getPPClass() {
     function PicketPoint(defaults) {
         this.ep_name = defaults.ep_name;
         this.ep_event_id = defaults.ep_event_id;
+        this.ep_sector = defaults.ep_sector;
     };
     return PicketPoint;
 });

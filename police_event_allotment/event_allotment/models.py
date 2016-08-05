@@ -21,5 +21,5 @@ class EventParticipant(models.Model):
 class EventPicketPoint(models.Model):
 	ep_name = models.CharField(max_length=200)
 	ep_event_id = models.CharField(max_length=200)
-
+	ep_sector = models.CharField(max_length=50)
 

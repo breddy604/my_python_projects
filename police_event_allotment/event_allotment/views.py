@@ -168,7 +168,8 @@ def create_participant(input):
 
 def create_ppoint(input):
     epe = EventPicketPoint(ep_name=input['ep_name'],
-        ep_event_id = input['ep_event_id']
+        ep_event_id = input['ep_event_id'],
+        ep_sector = input['ep_sector'],
         )
     return epe
 
