@@ -76,7 +76,6 @@ def view_dispatch_force_page(request):
 
 def login(request):
     user_info = json.loads(request.body)
-    time.sleep(5)
     user = authenticate(username=user_info['username'], password=user_info['password'])
     if user is not None:
         # the password verified for the user
