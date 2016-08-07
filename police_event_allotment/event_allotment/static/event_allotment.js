@@ -77,6 +77,10 @@ ea.config(function($routeProvider) {
             templateUrl: '/passport',
             controller: 'eventAllotmentController'
         })
+        .when('/report_sector_wise/:event_id', {
+            templateUrl: '/report_sector_wise',
+            controller: 'eventAllotmentController'
+        })
         .otherwise({ templateUrl: '/about' });
 });
 
@@ -220,6 +224,18 @@ ea.controller("eventAllotmentController", function($scope, eventAllotmentStorage
             function(result) {
                 $scope.passport_data = result;
                 $scope.force = sort_by_rank(angular.fromJson(result['force']));
+            },
+            function(result) {
+                console.log("Error in getting all events");
+            }
+
+        );
+    }
+
+    $scope.get_force_by_sector = function() {
+        eventAllotmentStorage.get_object('/get_force_by_sector/' + $routeParams.event_id).then(
+            function(result) {
+                $scope.force_by_sector = result;
             },
             function(result) {
                 console.log("Error in getting all events");

@@ -14,7 +14,7 @@ from django.contrib.auth import authenticate
 
 from django.contrib import auth
 
-import json, time
+import json, time, collections
 
 # Create your views here.
 
@@ -32,6 +32,9 @@ def passport(request):
 
 def login_page(request):
     return render(request,'login.html')
+
+def report_sector_wise(request):
+    return render(request, 'report_sector_wise.html')
 
 def view_all_events(request, source):
     if source == 'viewForce' :
@@ -213,6 +216,44 @@ def get_data_for_passport(request, event_id, point_id, person_id=''):
     return HttpResponse(json.dumps(toReturn))
 
 
+def get_force_by_sector(request, event_id):
+    all_pp = EventPicketPoint.objects.filter(ep_event_id = event_id)
+    to_be_returned = []
+    sectors = []
+    for p in all_pp:
+        if p.ep_sector not in sectors:
+            sectors.append(p.ep_sector)
+
+    for sector in sectors:
+        sector_object = {}
+        sector_object['sector_name'] = sector
+        all_pp_sector = EventPicketPoint.objects.filter(ep_sector = sector, ep_event_id = event_id)
+        points = []
+        for pp in all_pp_sector:
+            point = {}
+            point['point_name'] = pp.ep_name
+            all_force_pp = EventParticipant.objects.filter(p_pp_id = pp.pk , p_event_id=event_id)
+            point['force'] = sort_by_rank(add_unique_results(all_force_pp))
+            points.append(point)
+        sector_object['points'] = points
+        to_be_returned.append(sector_object)
+
+    return HttpResponse(json.dumps(to_be_returned, indent = 4))
+
+            
+def get_force_by_station(request, event_id):
+    all_force = EventParticipant.objects.filter(p_event_id=event_id)
+    force_by_ps = {}
+
+    for force in all_force:
+        if force.p_ps not in force_by_ps:
+            force_by_ps[force.p_ps] = 0
+        force_by_ps[force.p_ps] = force_by_ps[force.p_ps] + 1
+
+    return HttpResponse(json.dumps(force_by_ps))
+
+
+
 def get_free_force(request,event_id,point_id):
     all_force = EventParticipant.objects.filter((Q(p_pp_id = point_id) | Q(p_pp_id = '')), p_event_id=event_id )
     toReturn = add_unique_results(all_force)
@@ -241,3 +282,18 @@ def add_unique_results(q):
         if(c['fields'] not in output):
             output.append(c['fields'])
     return output
+
+def sort_by_rank(result):
+    force_by_rank = collections.OrderedDict([('DSP' , []), ('CI', []), ('SI', []), ('WSI', []), ('ASI', []), ('WASI', []), ('HC', []), ('WHC', []), ('PC', []), ('WPC', []) ])
+    
+    for f in force_by_rank:
+        print f
+
+    for f in result :
+        force_by_rank[f['p_designation']].append(f);
+    to_return = [];
+    for f in force_by_rank :
+        to_return = to_return + force_by_rank[f]
+
+    return to_return;
+

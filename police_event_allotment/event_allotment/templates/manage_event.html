@@ -29,15 +29,27 @@
                             <li role="separator" class="divider"></li>
                             <li><a href="#event_page">Edit Event </a></li>
                             <li role="separator" class="divider"></li>
-                            <li class="dropdown-header">Picket Points</li>
-                            <li><a href="#allot_pp/{{p_event_id}}">Add </a></li>
-                            <li><a href="#view_all_ppoints/{{p_event_id}}">View </a></li>
-                            <li role="separator" class="divider"></li>
-                            <li class="dropdown-header">Police Force</li>
-                            <li><a href="#allot_force/{{p_event_id}}">Add</a></li>
-                            <li><a href="#view_all_force/{{p_event_id}}">View</a></li>
-                            <li role="separator" class="divider"></li>
                             <li><a href="#view_all_ppoints/{{p_event_id}}">Dispatch Force</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li class="dropdown-submenu"> <a href="#">Picket Points </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#allot_pp/{{p_event_id}}"> Add </a></li>
+                                    <li><a href="#view_all_ppoints/{{p_event_id}}"> View </a></li>
+                                </ul>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li class="dropdown-submenu"> <a href="#">Police Force </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#allot_force/{{p_event_id}}"> Add </a></li>
+                                    <li><a href="#view_all_force/{{p_event_id}}"> View </a></li>
+                                </ul>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li class="dropdown-submenu"> <a href="#">Reports </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#report_sector_wise/{{p_event_id}}">Sectorwise Allotment </a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
                     <li> <a href="#">Event Name : {{ p_title }} </a></li>

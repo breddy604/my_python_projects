@@ -34,4 +34,7 @@ url(r'^get_event_name/(.*)$',views.get_event_name,name='get_event_name'),
 url(r'^get_point_name/(.*)$',views.get_point_name,name='get_point_name'),
 url(r'^get_allotted_pc/(.*)/(.*)$',views.get_allotted_pc,name='get_allotted_pc'),
 url(r'^get_data_for_passport/(.*)/(.*)/(.*)$',views.get_data_for_passport,name='get_data_for_passport'),
+url(r'^get_force_by_sector/(.*)$',views.get_force_by_sector,name='get_force_by_sector'),
+url(r'^report_sector_wise',views.report_sector_wise,name='report_sector_wise'),
+url(r'^get_force_by_station/(.*)',views.get_force_by_station,name='get_force_by_station'),
 ]
