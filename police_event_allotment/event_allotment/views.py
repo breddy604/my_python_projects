@@ -36,6 +36,9 @@ def login_page(request):
 def report_sector_wise(request):
     return render(request, 'report_sector_wise.html')
 
+def force_by_station(request):
+    return render(request, 'force_by_station.html')  
+
 def view_all_events(request, source):
     if source == 'viewForce' :
         return render(request,'view_all_events.html' , {'p_title' : 'View All Force Allocated', 'p_next_url' : 'view_all_force'})
@@ -246,11 +249,16 @@ def get_force_by_station(request, event_id):
     force_by_ps = {}
 
     for force in all_force:
+        tmp = {}
         if force.p_ps not in force_by_ps:
             force_by_ps[force.p_ps] = 0
         force_by_ps[force.p_ps] = force_by_ps[force.p_ps] + 1
 
-    return HttpResponse(json.dumps(force_by_ps))
+    to_be_returned = []
+    for f in force_by_ps:
+        to_be_returned.append({'station_name' : f, 'count' : force_by_ps[f]})
+
+    return HttpResponse(json.dumps(to_be_returned))
 
 
 

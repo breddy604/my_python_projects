@@ -37,4 +37,6 @@ url(r'^get_data_for_passport/(.*)/(.*)/(.*)$',views.get_data_for_passport,name='
 url(r'^get_force_by_sector/(.*)$',views.get_force_by_sector,name='get_force_by_sector'),
 url(r'^report_sector_wise',views.report_sector_wise,name='report_sector_wise'),
 url(r'^get_force_by_station/(.*)',views.get_force_by_station,name='get_force_by_station'),
+url(r'^force_by_station',views.force_by_station,name='force_by_station'),
+
 ]

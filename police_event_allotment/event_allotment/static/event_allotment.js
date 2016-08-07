@@ -81,6 +81,10 @@ ea.config(function($routeProvider) {
             templateUrl: '/report_sector_wise',
             controller: 'eventAllotmentController'
         })
+        .when('/force_by_station/:event_id', {
+            templateUrl: '/force_by_station',
+            controller: 'eventAllotmentController'
+        })
         .otherwise({ templateUrl: '/about' });
 });
 
@@ -236,6 +240,18 @@ ea.controller("eventAllotmentController", function($scope, eventAllotmentStorage
         eventAllotmentStorage.get_object('/get_force_by_sector/' + $routeParams.event_id).then(
             function(result) {
                 $scope.force_by_sector = result;
+            },
+            function(result) {
+                console.log("Error in getting all events");
+            }
+
+        );
+    }
+
+    $scope.get_force_by_station = function() {
+        eventAllotmentStorage.get_object('/get_force_by_station/' + $routeParams.event_id).then(
+            function(result) {
+                $scope.force_by_station = result;
             },
             function(result) {
                 console.log("Error in getting all events");
