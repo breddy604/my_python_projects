@@ -214,7 +214,8 @@ def get_data_for_passport(request, event_id, point_id, person_id=''):
     toReturn['event_owner_district'] = PoliceEvent.objects.get(pk=event_id).event_owner_district
     toReturn['event_start_date'] = PoliceEvent.objects.get(pk=event_id).event_start_date
     toReturn['event_end_date'] = PoliceEvent.objects.get(pk=event_id).event_end_date
-    toReturn['point_name'] = EventPicketPoint.objects.get(pk=point_id).ep_name
+    point_p = EventPicketPoint.objects.get(pk=point_id)
+    toReturn['point_name'] = point_p.ep_sector + '-' + point_p.ep_name
     toReturn['force'] = force_json
     return HttpResponse(json.dumps(toReturn))
 
