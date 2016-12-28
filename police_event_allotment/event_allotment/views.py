@@ -6,7 +6,7 @@ from django.forms.models import model_to_dict
 
 from django.db.models import Q
 
-from models import PoliceEvent,EventParticipant,EventPicketPoint
+from models import PoliceEvent,EventParticipant,EventPicketPoint,PoliceStation
 
 from django.contrib.auth.decorators import login_required
 
@@ -32,6 +32,9 @@ def passport(request):
 
 def login_page(request):
     return render(request,'login.html')
+
+def add_ps_page(request):
+    return render(request,'add_stations.html')
 
 def report_sector_wise(request):
     return render(request, 'report_sector_wise.html')
@@ -131,11 +134,29 @@ def add_participant(request):
     po.save()
     return HttpResponse(po.pk)
 
+def delete_participant(request,participant_id):
+    participants = EventParticipant.objects.get(pk=participant_id)
+    participants.delete()
+
+    return HttpResponse("Success")
+
 def add_ppoint(request):
     p = json.loads(request.body)
     po = create_ppoint(p)
     po.save()
     return HttpResponse(po.pk)
+
+def delete_ppoint(request,point_id):
+    points = EventPicketPoint.objects.get(pk=point_id)
+    points.delete()
+
+    return HttpResponse("Success")    
+
+def delete_event(request,event_id):
+    events = PoliceEvent.objects.get(pk=event_id)
+    events.delete()
+
+    return HttpResponse("Success")  
 
 def dispatch_force(request, event_id, point_id):
     fl = json.loads(request.body)
@@ -196,10 +217,24 @@ def get_all_force(request,event_id):
     toReturn = add_unique_results(all_force)
     for f in toReturn:
         if f['p_pp_id'] != '':
-            p = EventPicketPoint.objects.get(pk=f['p_pp_id'])
-            f['p_pp_name'] = p.ep_name
+            try:
+                p = EventPicketPoint.objects.get(pk=f['p_pp_id'])
+                f['p_pp_name'] = p.ep_sector + "-:- " + p.ep_name
+            except  EventPicketPoint.DoesNotExist:
+                pass
 
     return HttpResponse(json.dumps(toReturn))
+
+def get_all_ps(request):
+    all_ps=PoliceStation.objects.all()
+    toReturn = add_unique_results(all_ps)
+    return HttpResponse(json.dumps(toReturn))
+
+def add_ps(request):
+    ps = PoliceStation(station_name = request.body)
+    ps.save()
+    time.sleep(5)
+    return HttpResponse("success")
 
 def get_data_for_passport(request, event_id, point_id, person_id=''):
     if(person_id == 'undefined'):
@@ -293,7 +328,7 @@ def add_unique_results(q):
     return output
 
 def sort_by_rank(result):
-    force_by_rank = collections.OrderedDict([('DSP' , []), ('CI', []), ('SI', []), ('WSI', []), ('ASI', []), ('WASI', []), ('HC', []), ('WHC', []), ('PC', []), ('WPC', []) ])
+    force_by_rank = collections.OrderedDict([('DSP' , []), ('CI', []), ('SI', []), ('WSI', []), ('ASI', []), ('WASI', []), ('HC', []), ('WHC', []), ('PC', []), ('WPC', []), ('HG', []), ('WHG', []) ])
     
     for f in force_by_rank:
         print f

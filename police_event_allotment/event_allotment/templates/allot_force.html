@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" ng-init="loadStations()">
     {% csrf_token %}
     <h4 class="text-center">  -- Add Force -- </h4>
     <form class="form-horizontal">
@@ -17,88 +17,7 @@
         <div class="form-group">
             <label for="pPS" class="col-sm-2 control-label">Police Station</label>
             <div class="col-sm-4">
-                <select class="form-control" id="pPS" ng-model="person.p_ps">
-                    <option>Kadapa I town P.S.</option>
-                    <option>Kadapa Taluk P.S.</option>
-                    <option>Kadapa Traffic P.S.</option>
-                    <option>Chennur P.S.</option>
-                    <option>Kadapa II town P.S.</option>
-                    <option>C. Chowk U/G P.S.</option>
-                    <option>RIMS P.S.</option>
-                    <option>C.K Dinne P.S.</option>
-                    <option>Pendlimarry P.S.</option>
-                    <option>Vallur P.S.</option>
-                    <option>Yerraguntla P.S.</option>
-                    <option>Kamalapuram P.S.</option>
-                    <option>G.R Palli P.S.</option>
-                    <option>Kalamala P.S.</option>
-                    <option>CCS, Kadapa.</option>
-                    <option>PCR, Kadapa.</option>
-                    <option>Women U/G P.S.</option>
-                    <option>Proddatur I Town P.S.</option>
-                    <option>Proddatur 2 town P.S.</option>
-                    <option>Proddatur 3 town P.S.</option>
-                    <option>Proddatur Traffic P.S.</option>
-                    <option>Proddatur (R) P.S.</option>
-                    <option>Rajupalem P.S.</option>
-                    <option>Chapadu P.S.</option>
-                    <option>PCR, Proddatur</option>
-                    <option>J. Madugu U/G P.S.</option>
-                    <option>T. Patnam P.S.</option>
-                    <option>Mylavaram P.S.</option>
-                    <option>Peddamudiam P.S.</option>
-                    <option>Kondapuram P.S.</option>
-                    <option>Simhadripuram P.S.</option>
-                    <option>T. Proddatur P.S.</option>
-                    <option>Thondur P.S.</option>
-                    <option>Muddanur P.S.</option>
-                    <option>Pulivendula U/G P.S.</option>
-                    <option>Pulivendula Tr., P.S.</option>
-                    <option>Lingala P.S.</option>
-                    <option>Vemula P.S.</option>
-                    <option>Vempalli P.S.</option>
-                    <option>R.K. Valley P.S.</option>
-                    <option>L.R Palli P.S.</option>
-                    <option>Ramapuram P.S.</option>
-                    <option>Galiveedu P.S.</option>
-                    <option>Chakrayapet P.S.</option>
-                    <option>Rayachoty U/G P.S.</option>
-                    <option>Chinnamandem P.S.</option>
-                    <option>Sambepalli P.S.</option>
-                    <option>T. Sundupalli P.S.</option>
-                    <option>Veeraballi P.S.</option>
-                    <option>Rajampet U/G P.S.</option>
-                    <option>Mannur P.S.</option>
-                    <option>Pullampet P.S.</option>
-                    <option>Pengalur P.S.</option>
-                    <option>Kodur P.S.</option>
-                    <option>Chitvel P.S.</option>
-                    <option>O.V Palli P.S.</option>
-                    <option>Vontimitta P.S.</option>
-                    <option>Nandalur P.S.</option>
-                    <option>Sidhout P.S.</option>
-                    <option>Mydukur U/G P.S.</option>
-                    <option>Duvvur P.S.</option>
-                    <option>Khajipet P.S.</option>
-                    <option>B.Mattam P.S.</option>
-                    <option>Badvel Town P.S.</option>
-                    <option>Badvel Rural P.S.</option>
-                    <option>Atlur P.S.</option>
-                    <option>Porumamilla P.S.</option>
-                    <option>Kalasapadu P.S.</option>
-                    <option>B. Kodur P.S.</option>
-                    <option>DCRB, Kadapa.</option>
-                    <option>DSB, Kadapa.</option>
-                    <option>VR, Kadapa.</option>
-                    <option>SC/ST Cell, Kadapa</option>
-                    <option>F/Zone, Kadapa.</option>
-                    <option>F/Zone, Proddatur.</option>
-                    <option>RSTF, Kadapa.</option>
-                    <option>DTC, Kadapa.</option>
-                    <option>DAR, Kadapa.</option>
-                    <option>Spl. Par. Kadapa. </option>
-                    <option>
-                </select>
+                <select class="form-control" id="pPS" ng-options="ps.station_name for ps in all_ps" ng-model="person.p_ps"></select>
             </div>
         </div>
         <div class="form-group">
@@ -115,6 +34,8 @@
                     <option>WHC</option>
                     <option>PC</option>
                     <option>WPC</option>
+                    <option>HG</option>
+                    <option>WHG</option>
                 </select>
             </div>
         </div>
@@ -129,7 +50,7 @@
                 <button type="submit" class="btn btn-default" ng-click="addParticipant()">Submit</button>
                 <span ng-show="response && !response.response"><i class="fa fa-spinner fa-spin fa-2x fa-fw"></i></span>
                 <span ng-show="response.response && response.response == 'success'"> Successfully Submitted ! </span>
-                <span ng-show="response.response && response.response == 'failure'"> XX An Error Occurred, Please submit again ! </span>
+                <span ng-show="response.response && response.response == 'failure'"> XX An Error Occurred, Please submit again ! ( A force with this ID might already exists)</span>
             </div>
         </div>
     </form>

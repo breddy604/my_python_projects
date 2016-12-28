@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Field
 
 class PoliceEvent(models.Model):
     event_name = models.CharField(max_length=200)
@@ -11,7 +12,7 @@ class PoliceEvent(models.Model):
 
 class EventParticipant(models.Model):
 	p_name = models.CharField(max_length=200)
-	p_code = models.CharField(max_length=200)
+	p_code = models.CharField(max_length=200, unique=True)
 	p_designation = models.CharField(max_length=200)
 	p_ps = models.CharField(max_length=30)
 	p_contact = models.CharField(max_length=200)
@@ -22,4 +23,7 @@ class EventPicketPoint(models.Model):
 	ep_name = models.CharField(max_length=200)
 	ep_event_id = models.CharField(max_length=200)
 	ep_sector = models.CharField(max_length=50)
+
+class PoliceStation(models.Model):
+	station_name = models.CharField(max_length=200, unique=True)
 

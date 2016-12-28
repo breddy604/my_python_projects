@@ -29,6 +29,10 @@ ea.config(function($routeProvider) {
             templateUrl: '/home',
             controller: 'eventAllotmentController'
         })
+        .when('/add_ps_page', {
+            templateUrl: '/add_ps_page',
+            controller: 'eventAllotmentController'
+        })
         .when('/view_all_events/addPPoint', {
             templateUrl: '/view_all_events/addPPoint',
             controller: 'eventAllotmentController'
@@ -124,16 +128,16 @@ ea.controller("eventAllotmentController", function($scope, eventAllotmentStorage
     };
 
     $scope.login = function() {
-            $scope.response = {};
+        $scope.response = {};
 
-            eventAllotmentStorage.login($scope.user,  "/login").then(
-                function(result) {
-                    if(result == 'success'){
-                        $scope.response.response = result;
-                        $window.location.href = '/';
-                    }
+        eventAllotmentStorage.login($scope.user, "/login").then(
+            function(result) {
+                if (result == 'success') {
+                    $scope.response.response = result;
+                    $window.location.href = '/';
                 }
-            );
+            }
+        );
     };
 
     $scope.setEventName = function() {
@@ -165,6 +169,46 @@ ea.controller("eventAllotmentController", function($scope, eventAllotmentStorage
             eventAllotmentStorage.saveObject($scope.person, "/add_participant", $scope.response);
             $scope.person = undefined;
         }
+    };
+
+    $scope.addPoliceStation = function() {
+        console.log("Add PS clicked ");
+
+        if ($scope.station_name) {
+            $scope.response = {};
+            eventAllotmentStorage.saveObject($scope.station_name, "/add_ps/", $scope.response);
+            $scope.station_name = "";
+        }
+    };
+
+    $scope.deleteParticipant = function(toBeDeleted, pos) {
+        console.log("Delete Participant clicked " + toBeDeleted);
+
+        eventAllotmentStorage.deleteObject("", "/delete_participant/" + toBeDeleted + "/", $scope.response).then(
+            function(result) {
+                $scope.all_force.splice(pos, 1);
+                $window.location.reload();
+            });
+    };
+
+    $scope.deletePoint = function(toBeDeleted, pos) {
+        console.log("Delete Participant clicked " + toBeDeleted);
+
+        eventAllotmentStorage.deleteObject("", "/delete_ppoint/" + toBeDeleted + "/", $scope.response).then(
+            function(result) {
+                $scope.all_ppoints.splice(pos, 1);
+                $window.location.reload();
+            });
+    };
+
+    $scope.deleteEvent = function(toBeDeleted, pos) {
+        console.log("Delete Participant clicked " + toBeDeleted);
+
+        eventAllotmentStorage.deleteObject("", "/delete_event/" + toBeDeleted + "/", $scope.response).then(
+            function(result) {
+                $scope.all_events.splice(pos, 1);
+                $window.location.reload();
+            });
     };
 
     $scope.dispatchForce = function() {
@@ -203,14 +247,26 @@ ea.controller("eventAllotmentController", function($scope, eventAllotmentStorage
         );
     };
 
+    $scope.loadStations = function() {
+        console.log("Get All Stations clicked");
+        eventAllotmentStorage.get_all_objects('/get_all_ps/').then(
+            function(result) {
+                $scope.all_ps = result;
+            },
+            function(result) {
+                console.log("Error in getting all ps");
+            }
+
+        );
+    };
+
     $scope.callGetForce = function() {
         console.log("Get All Force clicked");
         eventAllotmentStorage.get_all_objects('/get_all_force/' + $routeParams.p_event_id).then(
             function(result) {
                 $scope.all_force = sort_by_rank(result);
-                $scope.summary = { 'DSP': 0, 'CI': 0, 'SI': 0, 'WSI': 0, 'ASI': 0, 'WASI': 0, 'HC': 0, 'WHC': 0, 'PC': 0, 'WPC': 0 };
+                $scope.summary = { 'DSP': 0, 'CI': 0, 'SI': 0, 'WSI': 0, 'ASI': 0, 'WASI': 0, 'HC': 0, 'WHC': 0, 'PC': 0, 'WPC': 0, 'HG': 0, 'WHG': 0 };
                 for (p in $scope.all_force) {
-                    console.log(p);
                     $scope.summary[$scope.all_force[p].p_designation] = $scope.summary[$scope.all_force[p].p_designation] + 1;
                 }
 
@@ -291,17 +347,14 @@ ea.controller("eventAllotmentController", function($scope, eventAllotmentStorage
     };
 
     function sort_by_rank(result) {
-        var force_by_rank = { 'DSP': [], 'CI': [], 'SI': [], 'WSI': [], 'ASI': [], 'WASI': [], 'HC': [], 'WHC': [], 'PC': [], 'WPC': [] }
+        var force_by_rank = { 'DSP': [], 'CI': [], 'SI': [], 'WSI': [], 'ASI': [], 'WASI': [], 'HC': [], 'WHC': [], 'PC': [], 'WPC': [], 'HG': [], 'WHG': [] }
 
         for (f in result) {
             force_by_rank[result[f].p_designation].push(result[f]);
         }
 
-        console.log(force_by_rank);
-
         var to_return = [];
         for (f in force_by_rank) {
-            console.log(force_by_rank[f]);
             to_return = to_return.concat(force_by_rank[f]);
         }
 
@@ -337,6 +390,14 @@ ea.service("eventAllotmentStorage", function($http, $window) {
                 response_obj.response = "failure";
             }
         );
+    };
+
+    this.deleteObject = function(object, post_url, response_obj) {
+        return $http.post(post_url, object, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
     };
 
     this.get_all_objects = function(get_url) {
@@ -399,7 +460,7 @@ ea.factory("Participant", function getParticipantClass() {
         this.p_code = defaults.p_code;
         this.p_designation = defaults.p_designation;
         this.p_contact = defaults.p_contact;
-        this.p_ps = defaults.p_ps;
+        this.p_ps = defaults.p_ps.station_name;
         this.p_event_id = defaults.p_event_id;
     };
     return Participant;
