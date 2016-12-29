@@ -37,9 +37,11 @@
                 <td>
                     {$p_event.event_owner$}
                 </td>
+                {% if perms.event_allotment.delete_policeevent %}
                 <td>
                     <button type="submit" class="btn btn-default" ng-click="deleteEvent(p_event.pk, index)">Delete</button>
                 </td>
+                {% endif %}
             </tr>
         </table>
     </div>
