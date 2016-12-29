@@ -26,6 +26,7 @@
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Choose Action<span class="caret"></span></a>
                         <ul class="dropdown-menu">
+                            {% if perms.event_allotment.change_policeevent %}
                             <li role="separator" class="divider"></li>
                             <li><a href="#event_page">Edit Event </a></li>
                             <li role="separator" class="divider"></li>
@@ -37,7 +38,9 @@
                                     <li><a href="#view_all_ppoints/{{p_event_id}}"> View </a></li>
                                 </ul>
                             </li>
+                            {% endif %} 
                             <li role="separator" class="divider"></li>
+
                             <li class="dropdown-submenu"> <a href="#">Police Force </a>
                                 <ul class="dropdown-menu">
                                     <li><a href="#allot_force/{{p_event_id}}"> Add </a></li>
@@ -46,12 +49,14 @@
                                 </ul>
                             </li>
                             <li role="separator" class="divider"></li>
+                            {% if perms.event_allotment.change_policeevent %}
                             <li class="dropdown-submenu"> <a href="#">Reports </a>
                                 <ul class="dropdown-menu">
                                     <li><a href="#report_sector_wise/{{p_event_id}}">Sectorwise Allotment </a></li>
                                     <li><a href="#force_by_station/{{p_event_id}}">Stationwise Allocation </a></li>
                                 </ul>
                             </li>
+                            {% endif %}
                         </ul>
                     </li>
                     <li> <a href="#">Event Name : {{ p_title }} </a></li>
